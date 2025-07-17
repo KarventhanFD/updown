@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UpDown Studio-Gallery</title>
+  <!--CSS-->
+  <link rel="stylesheet" href="../CSS/style.css">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!--Lemon milk font-->
+  <link href="https://fonts.cdnfonts.com/css/lemon-milk" rel="stylesheet">
+
+  <!--Aos animation-->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+</head>
+<body class="bg-black">
+    <!--Navbar-->
+  <nav class="fixed top-0 w-full bg-black bg-opacity-50 backdrop-blur-md z-50">
+    <div class="max-w-[90%] xl:max-w-[1400px] mx-auto flex justify-between items-center py-4 px-6 lg:px-12">
+      <!-- Logo -->
+      <div class="text-3xl font-bold">
+      <a href="#home.html">  <img src="../Gallery/Logo/UPD-LOGO.png" alt="" class="h-20"></a>
+      </div>
+  
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="text-white text-2xl md:hidden focus:outline-none">
+        <i class="fas fa-bars"></i> 
+      </button>
+  
+      <!-- Desktop Navigation -->
+      <ul id="menu" class="hidden md:flex space-x-6 text-lg xl:text-xl">
+        <li><a href="home.html" class="nav-link text-white hover:text-cyan-400 transition duration-300">Home</a></li>
+        <li><a href="gallery.html" class="nav-link text-cyan-400">Gallery</a></li>
+        <li><a href="#films" class="nav-link text-white hover:text-cyan-400 transition duration-300">Films</a></li>
+        <li><a href="#stories" class="nav-link text-white hover:text-cyan-400 transition duration-300">Stories</a></li>
+        <li><a href="#about" class="nav-link text-white hover:text-cyan-400 transition duration-300">About</a></li>
+        <li><a href="#contact" class="nav-link text-white hover:text-cyan-400 transition duration-300">Contact</a></li>
+      </ul>
+  
+      <!-- Social Icons -->
+      <div class="hidden md:flex space-x-6 text-2xl xl:text-2xl">
+        <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400 transition duration-300"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="text-white hover:text-cyan-400 transition duration-300"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400 transition duration-300"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center space-y-6 transform translate-x-full transition-all duration-300 z-50">
+      <a href="#home" class="mobile-link text-cyan-400 text-lg">Home</a>
+      <a href="gallery.html" class="mobile-link text-white text-lg">Gallery</a>
+      <a href="#films" class="mobile-link text-white text-lg">Films</a>
+      <a href="#stories" class="mobile-link text-white text-lg">Stories</a>
+      <a href="#about" class="mobile-link text-white text-lg">About</a>
+      <a href="#contact" class="mobile-link text-white text-lg">Contact</a>
+      <button id="close-menu" class="text-white text-3xl absolute top-5 right-5"><i class="fas fa-times"></i></button>
+    </div>
+  </nav>
+
+
+  <script src="../JS/script.js"></script>
+</body>
+</html>
