@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photography Studio</title>
+  <!--CSS-->
+  <link rel="stylesheet" href="../CSS/style.css">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!--Counter-->
+
+  <script src="https://unpkg.com/countup.js@2.0.8/dist/countUp.umd.js"></script>
+
+  <!--Lemon milk font-->
+  <link href="https://fonts.cdnfonts.com/css/lemon-milk" rel="stylesheet">
+
+  <!--Aos animation-->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<!-- 
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.79/build/spline-viewer.js"></script>
+<spline-viewer url="https://prod.spline.design/IhfCvUqpsZfk2SwP/scene.splinecode"></spline-viewer> -->
+
+  <style>
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body class="bg-black text-white font-sans">
+
+<!--Navbar-->
+  <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-50 backdrop-blur-md z-50">
+  <div class="max-w-[90%] xl:max-w-[1400px] mx-auto flex justify-between items-center py-4 px-6 lg:px-12">
+    <!-- Logo -->
+    <a href="home.html">
+      <img src="../Gallery/Logo/UPD-LOGO.png" alt="Logo" class="h-16 md:h-20">
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button id="menu-btn" class="text-white text-2xl md:hidden focus:outline-none">
+      <i id="menu-icon" class="fas fa-bars"></i>
+    </button>
+
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex space-x-6 text-lg xl:text-xl">
+      <li><a href="home.html" class="text-white hover:text-cyan-400 transition">Home</a></li>
+      <li><a href="gallery.html" class="text-white hover:text-cyan-400 transition">Gallery</a></li>
+      <li><a href="films.html" class="text-cyan-400 font-semibold">Films</a></li>
+      <li><a href="stories.html" class="text-white hover:text-cyan-400 transition">Stories</a></li>
+      <li><a href="about.html" class="text-white hover:text-cyan-400 transition">About</a></li>
+ <li><a href="book-now.html" class="border border-cyan-400 text-cyan-400 px-4 py-1 rounded-lg text-lg text-2xl hover:bg-cyan-400 hover:text-white transition duration-300">Book Now</a></li>    </ul>
+
+    <!-- Desktop Social Icons -->
+    <div class="hidden md:flex space-x-6 text-2xl">
+      <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <!-- Backdrop -->
+  <div id="backdrop" class="fixed inset-0 bg-black bg-opacity-70 hidden z-40 transition-opacity duration-300 ease-in-out"></div>
+
+  <!-- Mobile Sidebar -->
+  <aside id="mobile-menu" 
+  class="fixed top-0 right-0 h-auto w-4/5 max-w-xs flex flex-col bg-black bg-opacity-95 shadow-2xl z-50 
+  transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+
+    <!-- Close Button -->
+    <button id="close-menu" class="absolute top-5 right-5 text-3xl text-white hover:text-cyan-400 transition-all focus:outline-none z-50" aria-label="Close menu">
+      <i class="fas fa-times"></i>
+    </button>
+    <nav class="flex-1 flex flex-col justify-center px-8 space-y-7 text-lg mt-14">
+      <a href="home.html" class="text-white hover:text-cyan-400 transition">Home</a>
+      <a href="gallery.html" class="text-white hover:text-cyan-400 transition">Gallery</a>
+      <a href="films.html" class="text-cyan-400 font-semibold">Films</a>
+      <a href="stories.html" class="text-white hover:text-cyan-400 transition">Stories</a>
+      <a href="about.html" class="text-white hover:text-cyan-400 transition">About</a>
+       <a href="book-now.html" class="flex items-center justify-center gap-2 border border-cyan-400 text-cyan-400 px-4 py-2 rounded-lg text-lg font-semibold hover:bg-cyan-400 hover:text-white transition duration-300 shadow-lg">
+        <i class="fas fa-calendar-check text-xl"></i>
+        Book Now
+      </a>
+    </nav>
+    <div class="border-t border-white mt-5 mb-3 pt-5 px-8 flex space-x-6 text-2xl">
+      <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+      <a href="tel:+919688169797" class="text-white hover:text-cyan-400"><i class="fas fa-phone"></i></a>
+    </div>
+  </aside>
+</nav>
+
+<!-- Films Section -->
+<section class="pt-24 mt-10 pb-16 px-4 md:px-8">
+  <div class="container mx-auto">
+    <h1 class="text-3xl md:text-4xl font-bold mb-12 text-center">Our Films</h1>
+    
+    <div id="videos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Videos will be dynamically inserted here -->
+    </div>
+  </div>
+</section>
+
+<!-- Video Template (hidden) -->
+<template id="video-template">
+  <div class="video-card bg-gray-900 rounded-lg overflow-hidden transition-all duration-300">
+    <div class="video-container">
+      <iframe class="youtube-iframe" frameborder="0" allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+      </iframe>
+    </div>
+    <div class="p-4">
+      <h3 class="text-lg font-semibold mb-2 video-title"></h3>
+      <div class="flex justify-between text-gray-400 text-sm">
+        <span class="flex items-center">
+          <i class="fas fa-eye mr-1"></i>
+          <span class="video-views"></span>
+        </span>
+        <span class="flex items-center">
+          <i class="fas fa-thumbs-up mr-1"></i>
+          <span class="video-likes"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Add this before closing </body> -->
+<div class="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
+  <!-- WhatsApp Icon -->
+  <a href="https://wa.me/+91 96881 69797" target="_blank"
+     class="relative group bg-gradient-to-br from-green-400 to-green-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+    <!-- Tooltip -->
+    <span class="absolute right-full top-1/2 transform -translate-y-1/2 mr-3 opacity-0 group-hover:opacity-100 transition-opacity bg-white text-black text-xs px-2 py-1 rounded shadow">
+      Chat on WhatsApp
+    </span>
+    <!-- Pulse Animation -->
+    <span class="absolute animate-ping w-full h-full rounded-full bg-green-400 opacity-75 top-0 left-0 z-[-1]"></span>
+  </a>
+
+  
+</div>
+
+<!-- Footer Section -->
+  <footer class="relative bg-black text-white py-10">
+    <div class="absolute inset-0 bg-cover bg-center overflow-hidden" style="background-image: url('../Gallery/Home page/gallery-12.jpg');"></div>
+    <div class="absolute inset-0 bg-black bg-opacity-80"></div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-12 gap-8 text-center md:text-left">
+      <!-- Social Media Links -->
+      <div class="text-center">
+        <h3 class="text-xl font-semibold mb-4">Follow Us</h3>
+        <div class="flex justify-center space-x-6 text-2xl">
+          <a href="#" class="text-white hover:text-cyan-400 transition duration-300">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="text-white hover:text-cyan-400 transition duration-300">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="#" class="text-white hover:text-cyan-400 transition duration-300">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="relative border-t border-gray-700 my-6 mx-10"></div>
+    <div class="relative text-center">
+      <p class="text-gray-400">&copy; 2025 Updown Studios. All Rights Reserved.</p>
+      <p class="text-gray-400 mt-2">Made with <span class="text-red-500">&hearts;</span> Updown Studios</p>
+    </div>
+  </footer>
+
+<script>
+  // Video data - Replace with your YouTube video IDs and stats
+  const videos = [
+    {
+      id: '8FGZcxzM1ro',
+      title: 'Two hearts beating as one ❤️ | Dhanesh&Lavanya ',
+      views: '64K',
+      likes: '4.8K'
+    },
+    {
+      id: 'sGizmGjcDPE',
+      title: 'Wedding Moments Of Mano & Meera ',
+      views: '89K',
+      likes: '6.5K'
+    },
+    
+     {
+      id: 'oOWfG-4ZOjg',
+      title: 'Gorgeous Couples | Ishu & Vicky Beach Wedding ',
+      views: '112K',
+      likes: '7.9K'
+    },
+    {
+      id: 'EfWm3h7ruzE',
+      title: 'Capture Life’s Best Moments',
+      views: '72K',
+      likes: '5.1K'
+    },
+    {
+      id: 'TahvVNG2cQw', 
+      title: 'Wedding Highlights | GANAPATHY & SARANYA',
+      views: '125K',
+      likes: '8.2K'
+    },
+     {
+      id: 'sC13eW-eBSs',
+      title: 'Rathish X Vigneshwari | Beautiful Tamil Wedding ',
+      views: '156K',
+      likes: '10.3K'
+    },
+    {
+      id: '115ddYxd8LY',
+      title: 'VICKY - NANDY | PRE WEDDING SHOOT',
+      views: '93K',
+      likes: '6.7K'
+    },
+    
+    {
+      id: 'L29Ije11EUQ',
+      title: 'Christian Wedding Highlights of Sesu and Jayasi',
+      views: '205K',
+      likes: '12.4K'
+    },
+    {
+      id: 'Cho-SZqIVrU',
+      title: 'Beautiful PreWed For Govarthanan & VishnuPriya ',
+      views: '78K',
+      likes: '5.6K'
+    }
+  ];
+
+  // Function to load videos
+  function loadVideos() {
+    const container = document.getElementById('videos-container');
+    const template = document.getElementById('video-template');
+
+    videos.forEach(video => {
+      const clone = template.content.cloneNode(true);
+      
+      // Set video iframe
+      const iframe = clone.querySelector('.youtube-iframe');
+      iframe.src = `https://www.youtube.com/embed/${video.id}?rel=0&modestbranding=1`;
+      
+      // Set video info
+      clone.querySelector('.video-title').textContent = video.title;
+      clone.querySelector('.video-views').textContent = video.views;
+      clone.querySelector('.video-likes').textContent = video.likes;
+      
+      container.appendChild(clone);
+    });
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    loadVideos();
+    
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.createElement('div');
+    mobileMenu.id = 'mobileMenu';
+    mobileMenu.className = 'fixed inset-0 bg-black bg-opacity-95 flex flex-col items-center justify-center text-center transform translate-y-full md:hidden z-40 pt-16';
+    mobileMenu.innerHTML = `
+      <div class="flex flex-col space-y-6 w-full px-6">
+        <a href="gallery.html" class="text-white text-xl py-2">Gallery</a>
+        <a href="films.html" class="text-cyan-400 text-xl py-2">Films</a>
+        <a href="stories.html" class="text-white text-xl py-2">Stories</a>
+        <a href="about.html" class="text-white text-xl py-2">About</a>
+        <a href="book-now.html" class="text-[#FFD645] text-xl py-2">Book Now</a>
+      </div>
+    `;
+    document.body.appendChild(mobileMenu);
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('translate-y-full');
+      mobileMenu.classList.toggle('translate-y-0');
+      document.body.style.overflow = mobileMenu.classList.contains('translate-y-0') ? 'hidden' : 'auto';
+    });
+
+    // Close mobile menu when clicking on links
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('translate-y-full');
+        mobileMenu.classList.remove('translate-y-0');
+        document.body.style.overflow = 'auto';
+      });
+    });
+  });
+</script>
+<script src="../JS/common.js"></script>
+</body>
+</html>
