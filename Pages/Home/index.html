@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UpDown Studio</title>
+  <!--CSS-->
+  <link rel="stylesheet" href="/CSS/style.css">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!-- <link href="https://fonts.cdnfonts.com/css/lemon-milk" rel="stylesheet"> -->
+   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+   <!-- Lightbox2 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+
+
+  <!--Aos animation-->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+  /* Carousel Container */
+  .carousel-container {
+    position: relative;
+  }
+
+  /* Each Item */
+  .carousel-item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out; /* Smooth fade */
+    pointer-events: none; /* Prevent interaction when hidden */
+  }
+
+  /* Active Item */
+  .carousel-item.active {
+    opacity: 1;
+    pointer-events: auto; /* Allow interaction only on active item */
+  }
+
+  /* Optional zoom fade effect */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.8s ease-out;
+  }
+</style>
+
+</head>
+<body class="bg-black text-white">
+
+<!--Navbar-->
+  <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-50 backdrop-blur-md z-50">
+  <div class="max-w-[90%] xl:max-w-[1400px] mx-auto flex justify-between items-center py-4 px-6 lg:px-12">
+    <!-- Logo -->
+    <a href="../Home/">
+      <img src="/Gallery/Logo/UPD-LOGO.png" alt="Logo" class="h-16 md:h-20">
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button id="menu-btn" class="text-white text-2xl md:hidden focus:outline-none">
+      <i id="menu-icon" class="fas fa-bars"></i>
+    </button>
+
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex space-x-6 text-lg xl:text-xl">
+      <li><a href="../Home/" class="text-cyan-400">Home</a></li>
+      <li><a href="../Gallery/" class="text-white hover:text-cyan-400 transition">Gallery</a></li>
+      <li><a href="../Films/" class="text-white hover:text-cyan-400 transition">Films</a></li>
+      <li><a href="../Stories/" class="text-white hover:text-cyan-400 transition">Stories</a></li>
+      <li><a href="../About/" class="text-white hover:text-cyan-400 transition">About</a></li>
+      <li><a href="../Book_Now/" class="border border-cyan-400 text-cyan-400 px-4 py-1 rounded-lg text-lg text-2xl hover:bg-cyan-400 hover:text-white transition duration-300">Book Now</a></li>
+    </ul>
+
+    <!-- Desktop Social Icons -->
+    <div class="hidden md:flex space-x-6 text-2xl">
+      <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <!-- Backdrop -->
+  <div id="backdrop" class="fixed inset-0 bg-black bg-opacity-70 hidden z-40 transition-opacity duration-300 ease-in-out"></div>
+
+  <!-- Mobile Sidebar -->
+  <aside id="mobile-menu" 
+  class="fixed top-0 right-0 h-auto w-4/5 max-w-xs flex flex-col bg-black bg-opacity-95 shadow-2xl z-50 
+  transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+
+    <!-- Close Button -->
+    <button id="close-menu" class="absolute top-5 right-5 text-3xl text-white hover:text-cyan-400 transition-all focus:outline-none z-50" aria-label="Close menu">
+      <i class="fas fa-times"></i>
+    </button>
+    <nav class="flex-1 flex flex-col justify-center px-8 space-y-7 text-lg mt-14">
+      <a href="../Home/" class="text-cyan-400 font-semibold">Home</a>
+      <a href="../Gallery/" class="text-white hover:text-cyan-400 transition">Gallery</a>
+      <a href="../Films/" class="text-white hover:text-cyan-400 transition">Films</a>
+      <a href="../Stories/" class="text-white hover:text-cyan-400 transition">Stories</a>
+      <a href="../About" class="text-white hover:text-cyan-400 transition">About</a>
+      <a href="../Book_Now/" class="flex items-center justify-center gap-2 border border-cyan-400 text-cyan-400 px-4 py-2 rounded-lg text-lg font-semibold hover:bg-cyan-400 hover:text-white transition duration-300 shadow-lg">
+        <i class="fas fa-calendar-check text-xl"></i>
+        Book Now
+      </a>
+    </nav>
+    <div class="border-t border-white mt-5 mb-3 pt-5 px-8 flex space-x-6 text-2xl">
+      <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+      <a href="tel:+919688169797" class="text-white hover:text-cyan-400"><i class="fas fa-phone"></i></a>
+    </div>
+  </aside>
+</nav>
+
+  <!-- Carousel Section -->
+ <section id="hero" class="hero section flex items-center justify-center mt-40 mb-15">
+  <div class="carousel-container relative max-w-full w-[90%] md:w-[80%] lg:w-[1000px] h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden rounded-xl shadow-lg">
+
+    <!-- Carousel Items -->
+    <div class="carousel-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-100">
+      <a href="/Gallery/HD/img-3.jpg" data-lightbox="home-carousel" data-title="Gallery 1">
+        <img src="/Gallery/Home_Gallery/IMG-4.jpg" 
+             alt="Gallery 1" 
+             class="w-full h-full object-cover rounded-xl"
+             loading="lazy"
+             decoding="async">
+      </a>
+    </div>
+
+    <div class="carousel-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0">
+      <a href="/Gallery/HD/img-6.jpg" data-lightbox="home-carousel" data-title="Gallery 2">
+        <img src="/Gallery/Home_Gallery/img-6.jpg" 
+             alt="Gallery 2" 
+             class="w-full h-full object-cover rounded-xl"
+             loading="lazy"
+             decoding="async">
+      </a>
+    </div>
+
+    <div class="carousel-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0">
+      <a href="/Gallery/HD/img-2.jpg" data-lightbox="home-carousel" data-title="Gallery 3">
+        <img src="/Gallery/Home_Gallery/img-1.JPG" 
+             alt="Gallery 3" 
+             class="w-full h-full object-cover rounded-xl"
+             loading="lazy"
+             decoding="async">
+      </a>
+    </div>
+
+    <div class="carousel-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0">
+      <a href="/Gallery/HD/img-3.jpg" data-lightbox="home-carousel" data-title="Gallery 4">
+        <img src="/Gallery/Home_Gallery/IMG-4.jpg"  
+             alt="Gallery 4" 
+             class="w-full h-full object-cover rounded-xl"
+             loading="lazy"
+             decoding="async">
+      </a>
+    </div>
+
+    <div class="carousel-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0">
+      <a href="/Gallery/HD/img-6.jpg" data-lightbox="home-carousel" data-title="Gallery 5">
+        <img src="/Gallery/Home_Gallery/img-6.jpg"
+             alt="Gallery 5" 
+             class="w-full h-full object-cover rounded-xl"
+             loading="lazy"
+             decoding="async">
+      </a>
+    </div>
+
+  </div>
+</section>
+
+    <!--Slogan section-->
+ <section class="text-white px-4 mt-5 mb-8"> 
+  <div class="max-w mx-auto text-center" data-aos="zoom-in" data-aos-delay="0"> 
+    <h1 class="text-xl md:text-2xl text-white font-semibold mb-4"> “MOMENTS FADE, MEMORIES LAST FOREVER.” </h1> 
+    <p class="text-base md:text-lg text-white leading-relaxed"> At Updown Photography, We Capture Memories With Passion And Perfection, Specializing In Weddings, Destination Shoots, Product Branding, And Corporate Advertising—Every Frame Reflects Our Commitment To Excellence. </p>
+  </div> 
+</section>
+
+
+  <!--Service section-->
+  <section class="bg-black py-12 px-4">
+    <h2 class="text-center text-[#FFD645] text-3xl font-bold mb-8">Our Services</h2>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <!-- Service 1 -->
+      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden rounded-lg cursor-pointer ">
+          <img src="/Gallery/Home page/gallery-6.jpg" alt="Model" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+        </div>
+        <h3 class="text-xl font-semibold mt-4 text-[#b8860b]">Wedding</h3>
+        <p class="mt-2">Capturing the best fashion moments with high-end model photography.</p>
+      </div>
+  
+      <!-- Service 2 -->
+      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden rounded-lg cursor-pointer">
+          <img src="/Gallery/Home page/gallery-7.jpg" alt="Wedding" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+        </div>
+        <h3 class="text-xl text-[#b8860b] font-semibold mt-4">Outdoor</h3>
+        <p class="mt-2 text-white">Creating timeless wedding memories with beautiful candid moments.</p>
+      </div>
+  
+      <!-- Service 3 -->
+      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden rounded-lg cursor-pointer">
+          <img src="/Gallery/Home page/gallery-6.jpg" alt="Outdoor" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+        </div>
+        <h3 class="text-xl text-[#b8860b] font-semibold mt-4">Model</h3>
+        <p class="mt-2 text-white">Explore the beauty of outdoor photography with scenic shots.</p>
+      </div>
+  
+      <!-- Service 4 -->
+      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden rounded-lg cursor-pointer">
+          <img src="/Gallery/Home page/gallery-5.jpg" alt="Birthday" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+        </div>
+        <h3 class="text-xl text-[#b8860b] font-semibold mt-4">Birthday</h3>
+        <p class="mt-2 text-white">Capture joyful birthday moments with vibrant and candid clicks.</p>
+      </div>
+  
+      <!-- Service 5 -->
+      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden rounded-lg cursor-pointer">
+          <img src="/Gallery/Home page/gallery-4.jpg" alt="Travel" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+        </div>
+        <h3 class="text-xl text-[#b8860b] font-semibold mt-4">Travel</h3>
+        <p class="mt-2 text-white">Experience breathtaking travel photography from around the world.</p>
+      </div>
+  
+      <!-- Service 6 -->
+      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden rounded-lg cursor-pointer">
+          <img src="/Gallery/Home page/gallery-3.jpg" alt="Party" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+        </div>
+        <h3 class="text-xl text-[#b8860b] font-semibold mt-4">Party</h3>
+        <p class="mt-2 text-white">Fun-filled party photography capturing the best moments.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Hiring Section -->
+<section class="text-center py-12 px-6 overflow-hidden text-white">
+  <!-- Icon -->
+  <div class="flex justify-center">
+    <div class="bg-cyan-400 p-4 rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-12 h-12">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7V6a4 4 0 0 0-8 0v1M9 22h6a3 3 0 0 0 3-3v-4a3 3 0 0 0-3-3H9a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3z"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Heading -->
+  <h2 class="text-xl font-bold text-center text-[#b8860b] mt-4">
+    We are Hiring!
+  </h2>
+
+  <!-- Description -->
+  <p class="text-center mt-2 px-4 text-xl md:px-20 lg:px-32">
+    Together With New Input From Your Side, Work With Us On Developing
+    Something One Of A Kind For Clients, That Literally Blows Their Minds.
+  </p>
+
+  <!-- Button -->
+  <div class="mt-6 flex justify-center">
+    <button onclick="openModal()" class="border border-cyan-400 text-cyan-400 px-6 py-3 rounded-lg text-2xl  
+                   hover:bg-cyan-400 hover:text-white transition duration-300">
+      Apply Now
+    </button>
+  </div>
+</section>
+
+ <!-- Modal -->
+  <div id="applyModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 p-4">
+    <div class="bg-gray-900 w-full max-w-2xl rounded-2xl shadow-2xl p-6 md:p-8 animate-fadeIn border border-gray-700">
+      <!-- Close button -->
+      <div class="flex justify-end">
+        <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 text-3xl font-bold transition-colors duration-200">&times;</button>
+      </div>
+
+      <!-- Modal Heading -->
+      <h2 class="text-3xl font-bold text-center text-cyan-400 mb-6 md:mb-8 tracking-wide">
+        Apply For Position
+      </h2>
+
+      <!-- Form -->
+      <form class="space-y-4 md:space-y-6">
+        <!-- Name -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Name</label>
+          <input type="text" name="name" placeholder="Enter your name"
+            class="w-full px-4 py-3 bg-gray-800 text-white border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:outline-none placeholder-gray-500 transition-all duration-200">
+        </div>
+
+        <!-- Experience -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Year(s) of Experience</label>
+          <select name="experience" class="w-full px-4 py-3 bg-gray-800 text-white border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:outline-none transition-all duration-200">
+            <option value="" disabled selected>Select experience</option>
+            <option value="fresher">Fresher</option>
+            <option value="1">1 year experience</option>
+            <option value="2">2 years experience</option>
+            <option value="3plus">3+ years experience</option>
+          </select>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Contact Number</label>
+          <input type="tel" name="contact" placeholder="Enter contact number"
+            class="w-full px-4 py-3 bg-gray-800 text-white border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:outline-none placeholder-gray-500 transition-all duration-200">
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Email ID</label>
+          <input type="email" name="email" placeholder="Enter email address"
+            class="w-full px-4 py-3 bg-gray-800 text-white border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:outline-none placeholder-gray-500 transition-all duration-200">
+        </div>
+
+        <!-- Job Type -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Job Type</label>
+          <div class="flex flex-wrap gap-4 md:gap-8 mt-2 text-gray-300">
+            <label class="flex items-center gap-2 cursor-pointer hover:text-cyan-400 transition-colors duration-200">
+              <input type="radio" name="jobType" value="part-time" class="accent-cyan-500">
+              Part-time
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer hover:text-cyan-400 transition-colors duration-200">
+              <input type="radio" name="jobType" value="full-time" class="accent-cyan-500">
+              Full-time
+            </label>
+          </div>
+        </div>
+
+        <!-- Role -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Role</label>
+          <div class="flex flex-wrap gap-4 md:gap-8 mt-2 text-gray-300">
+            <label class="flex items-center gap-2 cursor-pointer hover:text-cyan-400 transition-colors duration-200">
+              <input type="radio" name="role" value="freelancer" class="accent-cyan-500">
+              Freelancer
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer hover:text-cyan-400 transition-colors duration-200">
+              <input type="radio" name="role" value="employee" class="accent-cyan-500">
+              Employee
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="flex justify-center mt-6 md:mt-8">
+          <button type="submit"
+            class="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 md:px-8 md:py-3 rounded-lg text-lg font-semibold shadow-lg shadow-cyan-500/30 transition-all duration-300 transform hover:scale-105">
+            Submit Application
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+   <!--Slogan-->
+    <section class="relative w-full mb-2 mx-auto overflow-hidden">
+  
+    <div class="relative">
+        <img src="/Gallery/Home page/gallery-9.jpg" alt="Rings and Roses" class="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[300px] object-cover">
+        
+
+        <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/50 to-transparent"></div>
+
+        <div class="absolute inset-0 flex items-center justify-center px-4">
+            <h2 class="text-white text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-serif font-semibold text-center">
+                Your story, beautifully told through our lens
+            </h2>
+        </div>
+    </div>
+</section> 
+
+<!--Why updown-->
+<section class="container mx-auto px-6 py-10">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+      
+      <!-- Left: Image Grid -->
+      <div class="grid grid-cols-2 gap-4" data-aos="fade-up">
+          <a href="/Gallery/HD/img-2.jpg" data-lightbox="home-gallery" data-title="Photography 1">
+    <img src="/Gallery/Home_Gallery/img-2.JPG" 
+         alt="Photography 1" 
+         loading="lazy"
+         class="w-full h-[500px] object-cover rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+  </a>
+
+  <!-- Gallery Item 2 -->
+  <a href="/Gallery/HD/img-6.jpg" data-lightbox="home-gallery" data-title="Photography 2">
+    <img src="/Gallery/Home_Gallery/img-6.jpg" 
+         alt="Photography 2" 
+         loading="lazy"
+         class="w-full h-[500px] object-cover rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+  </a>
+      </div>
+
+      <!-- Right: Why Updown Section -->
+      <div data-aos="fade-right">
+          <h2 class="text-3xl sm:text-3xl text-[#b8860b] font-bold mb-2">Why Updown?</h2>
+          <p class="text-lg sm:text-base text-gray-300 leading-relaxed">
+              Updown Photography is more than just a brand; it's a story, a feeling, a moment captured forever.  
+              We believe in telling your story through **natural light, candid expressions, and artistic compositions**.  
+              From **weddings, portraits, and cinematic photography**, we ensure each frame is timeless.  
+              <br><br>
+              Our **team of expert photographers** works passionately to create memories that last a lifetime.  
+              Choose **Updown Photography**, where every click speaks emotions.
+          </p>
+      </div>
+      
+  </div>
+</section>
+
+
+
+
+<!--Latest collection-->
+
+<section class="max-w-7xl mx-auto px-6 lg:px-12 py-10">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+
+      <!-- Left Side Content -->
+      <div data-aos="fade-down">
+          <h2 class="text-4xl lg:text-3xl text-[#b8860b] font-bold mb-4">Our Latest Collection</h2>
+          <p class="text-lg text-gray-300 mb-6">
+              Bringing your vision to life, one click at a time. <br>
+              Your vision, our passion, perfect pictures.
+          </p>
+          <a href="#" class="border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white px-6 py-3 rounded-lg transition duration-300">
+              View More
+          </a>
+      </div>
+
+      <!-- Right Side Image Slider -->
+      <div class="relative w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden" data-aos="fade-down">
+          <div class="carousel relative w-full h-full">
+              <div class="carousel-inner flex w-full h-full">
+                  <img src="/Gallery/Home page/gallery-10.jpg" class="carousel-items w-full h-full object-cover">
+                  <img src="/Gallery/Home page/gallery-11.jpg" class="carousel-items w-full h-full object-cover">
+                  <img src="/Gallery/Home page/gallery-12.jpg" class="carousel-items w-full h-full object-cover">
+                  <img src="/Gallery/Home page/gallery-13.jpg" class="carousel-items w-full h-full object-cover">
+              </div>
+          </div>
+          
+          <!-- Navigation Buttons -->
+          <button id="prev" class="absolute top-1/2 -translate-y-1/2 left-4 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full">
+              <i class="fas fa-chevron-left"></i>
+          </button>
+          <button id="next" class="absolute top-1/2 -translate-y-1/2 right-4 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full">
+              <i class="fas fa-chevron-right"></i>
+          </button>
+      </div>
+  </div>
+</section>
+
+<!-- Add this before closing </body> -->
+<div class="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
+  <!-- WhatsApp Icon -->
+  <a href="https://wa.me/+91 7010230672" target="_blank"
+     class="relative group bg-gradient-to-br from-green-400 to-green-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+    <!-- Tooltip -->
+    <span class="absolute right-full top-1/2 transform -translate-y-1/2 mr-3 opacity-0 group-hover:opacity-100 transition-opacity bg-white text-black text-xs px-2 py-1 rounded shadow">
+      Chat on WhatsApp
+    </span>
+    <!-- Pulse Animation -->
+    <span class="absolute animate-ping w-full h-full rounded-full bg-green-400 opacity-75 top-0 left-0 z-[-1]"></span>
+  </a>
+
+  
+</div>
+
+
+<!-- Footer -->
+    <footer class="bg-black py-12 px-6 border-t border-gray-800">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-4">UpDown</h3>
+                    <p class="text-gray-400">Capturing life's most precious moments with artistry and passion.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../Home/"class="text-gray-400 hover:text-cyan-400">Home</a></li>
+                        <li><a href="../Gallery/" class="text-gray-400 hover:text-cyan-400">Gallery</a></li>
+                        <li><a href="../Films/" class="text-gray-400 hover:text-cyan-400">Films</a></li>
+                        <li><a href="../Stories/" class="text-gray-400 hover:text-cyan-400">Stories</a></li>
+                        <li><a href="../About/" class="text-gray-400 hover:text-cyan-400">Contact</a></li>
+                        <li><a href="../Book_Now/" class="text-gray-400 hover:text-cyan-400">Book Now</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Portrait Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Wedding Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Landscape Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Commercial Photography</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="https://www.instagram.com/updown_studios/" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.youtube.com/@UpdownStudioss" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.youtube.com/@UpdownStudioss" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <a href="mailto:updownstudios1@gmail.com"><p class="text-gray-400 hover:text-cyan-400">updownstudios1@gmail.com</p></a>
+                    <a href="https://wa.me/+91 7010230672" target="_blank"><p class="text-gray-400 hover:text-cyan-400">+91 7010230672</p></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>© 2025 UpDown Photography. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+  <script src="/JS/script.js"> </script>
+  <script src="/JS/common.js"></script>
+  <!-- Lightbox2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
+
+   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+   <script>
+     AOS.init({
+            duration: 1000, 
+            once: true,     
+        });
+  </script>
+  <script>
+      // Get the modal
+    const modal = document.getElementById('applyModal');
+    
+    // Function to open modal
+    function openModal() {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+    }
+    
+    // Function to close modal
+    function closeModal() {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+</script>
+
+</body>
+</html>

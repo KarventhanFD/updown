@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photography Enquiry Form</title>
+  <!--CSS-->
+  <link rel="stylesheet" href="/CSS/style.css">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!--Montserrat font-->
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+</head>
+<body class="bg-black text-white font-sans">
+
+  <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-50 backdrop-blur-md z-50">
+  <div class="max-w-[90%] xl:max-w-[1400px] mx-auto flex justify-between items-center py-4 px-6 lg:px-12">
+    <!-- Logo -->
+    <a href="../Home/">
+      <img src="/Gallery/Logo/UPD-LOGO.png" alt="Logo" class="h-16 md:h-20">
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button id="menu-btn" class="text-white text-2xl md:hidden focus:outline-none">
+      <i id="menu-icon" class="fas fa-bars"></i>
+    </button>
+
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex space-x-6 text-lg xl:text-xl">
+      <li><a href="../Home/" class="text-white hover:text-cyan-400 transition">Home</a></li>
+      <li><a href="../Gallery/" class="text-white hover:text-cyan-400 transition">Gallery</a></li>
+      <li><a href="../Films/" class="text-white hover:text-cyan-400 transition">Films</a></li>
+      <li><a href="../Stories/" class="text-white hover:text-cyan-400 transition">Stories</a></li>
+      <li><a href="../About/" class="text-white hover:text-cyan-400 transition">About</a></li>
+      <li><a href="" class="border border-cyan-400 text-cyan-400 px-4 py-1 rounded-lg text-lg text-2xl hover:bg-cyan-400 hover:text-white transition duration-300">Book Now</a></li>
+    </ul>
+
+    <!-- Desktop Social Icons -->
+    <div class="hidden md:flex space-x-6 text-2xl">
+      <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <!-- Backdrop -->
+  <div id="backdrop" class="fixed inset-0 bg-black bg-opacity-70 hidden z-40 transition-opacity duration-300 ease-in-out"></div>
+
+  <!-- Mobile Sidebar -->
+  <aside id="mobile-menu" 
+  class="fixed top-0 right-0 h-auto w-4/5 max-w-xs flex flex-col bg-black bg-opacity-95 shadow-2xl z-50 
+  transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+
+    <!-- Close Button -->
+    <button id="close-menu" class="absolute top-5 right-5 text-3xl text-white hover:text-cyan-400 transition-all focus:outline-none z-50" aria-label="Close menu">
+      <i class="fas fa-times"></i>
+    </button>
+    <nav class="flex-1 flex flex-col justify-center px-8 space-y-7 text-lg mt-14">
+      <a href="../Home/" class="text-white hover:text-cyan-400 transition">Home</a>
+      <a href="../Gallery/" class="text-white hover:text-cyan-400 transition">Gallery</a>
+      <a href="../Films/" class="text-white hover:text-cyan-400 transition">Films</a>
+      <a href="../Stories/" class="text-white hover:text-cyan-400 transition">Stories</a>
+      <a href="../About/" class="text-white hover:text-cyan-400 transition">About</a>
+       <a href="" class="flex items-center justify-center gap-2 border border-cyan-400 text-cyan-400 px-4 py-2 rounded-lg text-lg font-semibold hover:bg-cyan-400 hover:text-white transition duration-300 shadow-lg">
+        <i class="fas fa-calendar-check text-xl"></i>
+        Book Now
+      </a>
+    </nav>
+    <div class="border-t border-white mt-5 mb-3 pt-5 px-8 flex space-x-6 text-2xl">
+      <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+      <a href="tel:+919688169797" class="text-white hover:text-cyan-400"><i class="fas fa-phone"></i></a>
+    </div>
+  </aside>
+</nav>
+
+
+  <!-- Main Content -->
+ <main class="min-h-screen bg-[url('/Gallery/HD/img-5.jpg')] bg-cover bg-center bg-no-repeat bg-fixed flex items-center justify-center px-4 py-10">
+
+    <div class="bg-black/70 mt-20 w-full max-w-7xl rounded-lg p-6 md:p-8 md:flex md:space-x-8 backdrop-blur-sm">
+      
+      <!-- Left Side -->
+      <div class="md:w-1/3 mb-8 md:mb-0 text-center md:text-left flex flex-col justify-center">
+        <div class="text-4xl mb-4"><img src="/Gallery/Normal/smile.png" alt="" class="w-[50px] h-[50px] rounded-lg shadow-xl "></div>
+        <h1 class="text-2xl font-semibold mb-2">Hey, We appreciate your interest in our Hard work.</h1>
+        <p class="text-sm mt-4 leading-relaxed">
+          Fill this form <br />
+          and we'll send you <br />
+          our customised quote.
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form 
+        class="md:w-2/3 space-y-4"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSfa6GFflnAdiTTnNyIvS6UunAyQJVtNDAvTQrjF82yDBELg_A/formResponse" 
+        method="POST" 
+        target="_blank"
+      >
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label for="name" class="block text-base mb-1">Name <span class="text-red-500">*</span></label>
+            <input id="name" name="entry.1855870209" type="text" class="w-full p-2 rounded bg-white/90 text-black focus:ring-2 focus:ring-cyan-400 focus:outline-none" required />
+          </div>
+          <div>
+            <label for="service" class="block text-base mb-1">Type of Service <span class="text-red-500">*</span></label>
+            <select id="service" name="entry.2067881099" class="w-full p-2 rounded bg-white/90 text-black focus:ring-2 focus:ring-cyan-400 focus:outline-none" required>
+              <option value="">Select</option>
+              <option>Wedding photography and videography</option>
+              <option>DESTINATION COUPLE SHOOT</option>
+              <option>BABY PHOTOSHOOT</option>
+              <option>CORPORATE FILMS</option>
+              <option>FASHION SHOOT</option>
+              <option>BRANDING & IDENTITY DESIGN</option>
+              <option>OTHER EVENTS SHOOT</option>
+            </select>
+          </div>
+          <div>
+            <label for="phone" class="block text-base mb-1">Contact Number <span class="text-red-500">*</span></label>
+            <input id="phone" name="entry.173357430" type="tel" class="w-full p-2 rounded bg-white/90 text-black focus:ring-2 focus:ring-cyan-400 focus:outline-none" required />
+          </div>
+          <div>
+            <label for="email" class="block text-base mb-1">Email ID <span class="text-red-500">*</span></label>
+            <input id="email" name="entry.1863708541" type="email" class="w-full p-2 rounded bg-white/90 text-black focus:ring-2 focus:ring-cyan-400 focus:outline-none" required />
+          </div>
+          
+          
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4 mt-4">
+          <div>
+            <label for="date" class="block text-base mb-1">Preferred Shoot Date <span class="text-red-500">*</span></label>
+            <input id="date" name="entry.231352347" type="date" class="w-full p-2 rounded bg-white/90 text-black focus:ring-2 focus:ring-cyan-400 focus:outline-none" required />
+          </div>
+
+          <div>
+            <label for="location" class="block text-base mb-1">Shoot Location <span class="text-red-500">*</span></label>
+            <input id="location" name="entry.1871125666" type="text" class="w-full p-2 rounded bg-white/90 text-black focus:ring-2 focus:ring-cyan-400 focus:outline-none" required />
+          </div>
+         
+        </div>
+
+        <div class="mt-4">
+          <label for="requirements" class="block text-base mb-1">Tell us more about your requirement <span class="text-red-500">*</span></label>
+          <textarea id="requirements" name="entry.41068167" rows="4" class="w-full p-2 rounded bg-white/90 text-black focus:ring-2 focus:ring-cyan-400 focus:outline-none" required></textarea>
+        </div>
+
+        <button type="submit" class="w-full md:w-auto bg-white text-black px-6 py-3 mt-4 rounded hover:bg-gray-300 transition font-medium focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black">
+          SEND ENQUIRY
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+  const menuBtn = document.getElementById("menu-btn");
+  const closeBtn = document.getElementById("close-menu");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const backdrop = document.getElementById("backdrop");
+
+  const openMenu = () => {
+    mobileMenu.classList.remove("translate-x-full");
+    mobileMenu.classList.add("translate-x-0");
+    backdrop.classList.remove("hidden");
+    backdrop.classList.add("opacity-100");
+    closeBtn.classList.remove("opacity-0", "pointer-events-none");
+    closeBtn.classList.add("opacity-100");
+    document.body.style.overflow = "hidden"; // Lock scroll
+  };
+
+  const closeMenu = () => {
+    mobileMenu.classList.add("translate-x-full");
+    mobileMenu.classList.remove("translate-x-0");
+    backdrop.classList.add("hidden");
+    backdrop.classList.remove("opacity-100");
+    closeBtn.classList.add("opacity-0", "pointer-events-none");
+    closeBtn.classList.remove("opacity-100");
+    document.body.style.overflow = ""; // Unlock scroll
+  };
+
+  menuBtn?.addEventListener("click", openMenu);
+  closeBtn?.addEventListener("click", closeMenu);
+  backdrop?.addEventListener("click", closeMenu);
+
+  // ✅ Auto-close menu on scroll
+  window.addEventListener("scroll", () => {
+    if (!mobileMenu.classList.contains("translate-x-full")) {
+      closeMenu();
+    }
+  });
+</script>
+
+
+
+</body>
+</html>

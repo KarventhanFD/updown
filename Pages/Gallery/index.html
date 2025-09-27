@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UpDown Studio - Enhanced Gallery</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!-- Montserrat font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+  <!-- AOS animation -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Lightbox for image viewing -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+
+  <!-- Splide carousel -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+
+  <style>
+    /* Custom styles */
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000;
+      color: white;
+    }
+
+    /* Enhanced Gallery Styles */
+    .album-card {
+      transition: all 0.4s ease;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .album-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(6, 182, 212, 0.15);
+    }
+
+    .album-image {
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+
+    .album-card:hover .album-image {
+      transform: scale(1.08);
+    }
+
+   /* Album Grid Styles */
+.album-grid-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.album-grid-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.album-grid-item {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.album-grid-item img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.album-grid-item img:hover {
+  transform: scale(1.03);
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+  .album-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .album-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .album-grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+    
+    /* Responsive adjustments */
+    /* @media (min-width: 640px) {
+      #album-images-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: minmax(180px, auto);
+      }
+    }
+    
+    @media (min-width: 768px) {
+      #album-images-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: minmax(200px, auto);
+        grid-gap: 20px;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      #album-images-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: minmax(220px, auto);
+        grid-gap: 25px;
+      }
+    } */
+    
+    /* Size classes for collage */
+    .size-small {
+      grid-row: span 1;
+      grid-column: span 1;
+    }
+    
+    .size-medium {
+      grid-row: span 2;
+      grid-column: span 1;
+    }
+    
+    .size-wide {
+      grid-row: span 1;
+      grid-column: span 2;
+    }
+    
+    .size-large {
+      grid-row: span 2;
+      grid-column: span 2;
+    }
+
+    /* Filter buttons */
+    .filter-btn {
+      transition: all 0.3s ease;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background-color: rgba(6, 182, 212, 0.2);
+      border-color: rgb(6, 182, 212);
+    }
+
+    /* Loading animation */
+    @keyframes shimmer {
+      0% { background-position: -468px 0 }
+      100% { background-position: 468px 0 }
+    }
+
+    .shimmer {
+      background: #1a1a1a;
+      background-image: linear-gradient(to right, #1a1a1a 0%, #2a2a2a 20%, #1a1a1a 40%, #1a1a1a 100%);
+      background-repeat: no-repeat;
+      background-size: 800px 104px; 
+      display: inline-block;
+      position: relative; 
+      animation-duration: 1.5s;
+      animation-fill-mode: forwards; 
+      animation-iteration-count: infinite;
+      animation-name: shimmer;
+      animation-timing-function: linear;
+    }
+
+    /* Parallax effect */
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #111;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(6, 182, 212, 0.5);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(6, 182, 212, 0.8);
+    }
+
+    /* Floating animation for elements */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(90deg, #0ea5e9, #06b6d4, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: gradient 3s linear infinite;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body class="bg-black">
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-50 backdrop-blur-md z-50">
+      <div class="max-w-[90%] xl:max-w-[1400px] mx-auto flex justify-between items-center py-4 px-6 lg:px-12">
+        <!-- Logo -->
+        <a href="../Home/">
+          <img src="/Gallery/Logo/UPD-LOGO.png" alt="Logo" class="h-16 md:h-20 floating">
+        </a>
+
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex space-x-6 text-lg xl:text-xl">
+          <li><a href="../Home/" class="text-white hover:text-cyan-400 transition">Home</a></li>
+          <li><a href="../Gallery/" class="text-cyan-400 font-semibold">Gallery</a></li>
+          <li><a href="../Films/" class="text-white hover:text-cyan-400 transition">Films</a></li>
+          <li><a href="../Stories/" class="text-white hover:text-cyan-400 transition">Stories</a></li>
+          <li><a href="../About/" class="text-white hover:text-cyan-400 transition">About</a></li>
+          <li><a href="../Book_Now/" class="border border-cyan-400 text-cyan-400 px-4 py-1 rounded-lg text-lg text-2xl hover:bg-cyan-400 hover:text-white transition duration-300">Book Now</a></li>
+        </ul>
+
+        <!-- Desktop Social Icons -->
+        <div class="hidden md:flex space-x-6 text-2xl">
+          <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+        </div>
+
+        <!-- Mobile Toggle Button -->
+        <button id="menu-btn" class="text-white text-2xl md:hidden focus:outline-none">
+          <i id="menu-icon" class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- Backdrop -->
+      <div id="backdrop" class="fixed inset-0 bg-black bg-opacity-70 hidden z-40 transition-opacity duration-300 ease-in-out"></div>
+
+      <!-- Mobile Sidebar -->
+      <aside id="mobile-menu" class="fixed top-0 right-0 h-auto w-4/5 max-w-xs flex flex-col bg-black bg-opacity-95 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+        <!-- Close Button -->
+        <button id="close-menu" class="absolute top-5 right-5 text-3xl text-white hover:text-cyan-400 transition-all focus:outline-none z-50" aria-label="Close menu">
+          <i class="fas fa-times"></i>
+        </button>
+        <nav class="flex-1 flex flex-col justify-center px-8 space-y-7 text-lg mt-14">
+          <a href="../Home/" class="text-white hover:text-cyan-400 transition">Home</a>
+          <a href="gallery.html" class="text-cyan-400">Gallery</a>
+          <a href="../Films/" class="text-white hover:text-cyan-400 transition">Films</a>
+          <a href="../Stories/" class="text-white hover:text-cyan-400 transition">Stories</a>
+          <a href="../About/" class="text-white hover:text-cyan-400 transition">About</a>
+          <a href="../Book_Now/" class="flex items-center justify-center gap-2 border border-cyan-400 text-cyan-400 px-4 py-2 rounded-lg text-lg font-semibold hover:bg-cyan-400 hover:text-white transition duration-300 shadow-lg">
+            <i class="fas fa-calendar-check text-xl"></i>
+            Book Now
+          </a>
+        </nav>
+        <div class="border-t border-white mt-5 mb-3 pt-5 px-8 flex space-x-6 text-2xl">
+          <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+          <a href="tel:+919688169797" class="text-white hover:text-cyan-400"><i class="fas fa-phone"></i></a>
+        </div>
+      </aside>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-96 flex items-center justify-center mt-20 overflow-hidden">
+      <div class="parallax absolute inset-0 z-0" style="background-image: url('/Gallery/Home page/gallery-12.jpg');"></div>
+      <div class="absolute inset-0 bg-black bg-opacity-60 z-1"></div>
+      <div class="relative z-2 text-center px-4">
+        <h1 class="text-5xl md:text-6xl font-bold mb-4 gradient-text" data-aos="fade-down">Our Gallery</h1>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+          Explore our collection of stunning photographs capturing moments of beauty, emotion, and artistry.
+        </p>
+      </div>
+    </section>
+
+    <!-- Gallery Content -->
+    <div class="container mx-auto px-4 mt-16">
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up">
+        <button class="filter-btn text-white px-4 py-2 rounded-full active" data-filter="all">All</button>
+        <button class="filter-btn text-white px-4 py-2 rounded-full" data-filter="wedding">Wedding</button>
+        <button class="filter-btn text-white px-4 py-2 rounded-full" data-filter="portrait">Portrait</button>
+        <button class="filter-btn text-white px-4 py-2 rounded-full" data-filter="landscape">Landscape</button>
+        <button class="filter-btn text-white px-4 py-2 rounded-full" data-filter="urban">Urban</button>
+      </div>
+      
+      <!-- Album Grid -->
+      <div id="album-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+      <!-- Loading Skeleton -->
+      <div id="loading-skeleton" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+        <div class="bg-gray-900 rounded-lg overflow-hidden shimmer" style="height: 400px;"></div>
+        <div class="bg-gray-900 rounded-lg overflow-hidden shimmer" style="height: 400px;"></div>
+        <div class="bg-gray-900 rounded-lg overflow-hidden shimmer" style="height: 400px;"></div>
+      </div>
+
+      <!-- Load More Button -->
+      <div class="text-center mt-12">
+        <button id="load-more" class="bg-transparent border-2 border-cyan-400 text-cyan-400 px-8 py-3 rounded-full hover:bg-cyan-400 hover:text-black transition-all duration-300">
+          Load More
+        </button>
+      </div>
+    </div>
+
+    <!-- Album Details Page Content -->
+    <div id="album-details-page" class="hidden container mx-auto px-4 mt-32 text-white">
+      <button id="back-to-gallery" class="mb-8 px-6 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors flex items-center">
+        <i class="fas fa-arrow-left mr-2"></i> Back to Gallery
+      </button>
+      
+      <div class="flex flex-col lg:flex-row gap-8 mb-12">
+        <div class="lg:w-2/3">
+          <img id="album-cover-image" src="" alt="" class="w-full h-auto rounded-lg shadow-xl">
+        </div>
+        <div class="lg:w-1/3 bg-gray-900 p-6 rounded-lg">
+          <h1 id="album-title" class="text-3xl font-bold mb-4"></h1>
+          <p id="album-description" class="mb-6 text-gray-300"></p>
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-lg font-medium text-cyan-400">Date</h3>
+              <p id="album-date"></p>
+            </div>
+            <div>
+              <h3 class="text-lg font-medium text-cyan-400">Category</h3>
+              <p id="album-category"></p>
+            </div>
+            <div>
+              <h3 class="text-lg font-medium text-cyan-400">Photos</h3>
+              <p id="album-photo-count"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <h2 class="text-3xl font-bold mb-8 gradient-text">Gallery</h2>
+      <div id="album-images-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+    </div>
+
+    <!-- Featured Albums Carousel -->
+    <section class="container mx-auto px-4 mt-24">
+      <h2 class="text-3xl font-bold mb-12 text-center gradient-text" data-aos="fade-up">Featured Albums</h2>
+      <div class="splide" aria-label="Featured Albums">
+        <div class="splide__track">
+          <ul class="splide__list" id="featured-albums">
+            <!-- Will be populated by JavaScript -->
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="container mx-auto px-4 mt-24">
+      <div class="bg-gray-900 rounded-2xl p-8 md:p-12 text-center" data-aos="fade-up">
+        <h2 class="text-3xl font-bold mb-4 gradient-text">Stay Updated</h2>
+        <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
+          Subscribe to our newsletter to receive updates on new galleries, special offers, and photography tips.
+        </p>
+        <div class="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+          <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-cyan-400 focus:outline-none">
+          <button class="bg-cyan-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-cyan-300 transition-colors">
+            Subscribe
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- WhatsApp Button -->
+    <div class="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
+      <a href="https://wa.me/+918778542024" target="_blank"
+         class="relative group bg-gradient-to-br from-green-400 to-green-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+        <span class="absolute right-full top-1/2 transform -translate-y-1/2 mr-3 opacity-0 group-hover:opacity-100 transition-opacity bg-white text-black text-xs px-2 py-1 rounded shadow">
+          Chat on WhatsApp
+        </span>
+        <span class="absolute animate-ping w-full h-full rounded-full bg-green-400 opacity-75 top-0 left-0 z-[-1]"></span>
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 px-6 border-t border-gray-800">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-4">UpDown</h3>
+                    <p class="text-gray-400">Capturing life's most precious moments with artistry and passion.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../Home/"class="text-gray-400 hover:text-cyan-400">Home</a></li>
+                        <li><a href="../Gallery/" class="text-gray-400 hover:text-cyan-400">Gallery</a></li>
+                        <li><a href="../Films/" class="text-gray-400 hover:text-cyan-400">Films</a></li>
+                        <li><a href="../Stories/" class="text-gray-400 hover:text-cyan-400">Stories</a></li>
+                        <li><a href="../About/" class="text-gray-400 hover:text-cyan-400">Contact</a></li>
+                        <li><a href="../Book_Now/" class="text-gray-400 hover:text-cyan-400">Book Now</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Portrait Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Wedding Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Landscape Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Commercial Photography</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="https://www.instagram.com/updown_studios/" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.youtube.com/@UpdownStudioss" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.youtube.com/@UpdownStudioss" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <a href="mailto:updownstudios1@gmail.com"><p class="text-gray-400 hover:text-cyan-400">updownstudios1@gmail.com</p></a>
+                    <a href="https://wa.me/+91 7010230672" target="_blank"><p class="text-gray-400 hover:text-cyan-400">+91 7010230672</p></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>© 2025 UpDown Photography. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+  
+
+    <!-- Scripts -->
+     <!-- <script src="/JS/gallery.js"></script> -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    
+    <script>
+      // Initialize AOS
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+
+      // Album data
+      const albums = [
+  {
+    id: "wedding-photography",
+    title: "Wedding Photography",
+    description: "Beautiful moments from our latest wedding shoot. We capture every special moment to make your memories last forever.",
+    events: ["Wedding"],
+    coverImage: "img-2.jpg",
+    slides: [
+      { Home_Gallery: "gallery-5.jpg", HD: "gallery-5.jpg" },
+      { Home_Gallery: "gallery-2.jpg", HD: "gallery-2.jpg" },
+      { Home_Gallery: "gallery-3.jpg", HD: "gallery-3.jpg" },
+      { Home_Gallery: "gallery-4.jpg", HD: "gallery-4.jpg" },
+      { Home_Gallery: "gallery-6.jpg", HD: "gallery-6.jpg" },
+      { Home_Gallery: "gallery-7.jpg", HD: "gallery-7.jpg" },
+      { Home_Gallery: "gallery-8.jpg", HD: "gallery-8.jpg" }
+    ],
+    photoCount: 24,
+    date: "June 2023",
+    category: "wedding",
+    featured: true,
+    color: "#f3e5f5"
+  },
+  {
+    id: "portrait-series",
+    title: "Portrait Series",
+    description: "Stunning portrait collection that captures the essence of personality and emotion.",
+    events: ["Portrait"],
+    coverImage: "img-6.jpg",
+    slides: [
+      { Home_Gallery: "gallery-2.jpg", HD: "gallery-2.jpg" },
+      { Home_Gallery: "gallery-3.jpg", HD: "gallery-3.jpg" },
+      { Home_Gallery: "gallery-4.jpg", HD: "gallery-4.jpg" },
+      { Home_Gallery: "gallery-14.jpg", HD: "gallery-14.jpg" },
+      { Home_Gallery: "gallery-12.jpg", HD: "gallery-12.jpg" },
+      { Home_Gallery: "gallery-11.jpg", HD: "gallery-11.jpg" },
+      { Home_Gallery: "gallery-10.jpg", HD: "gallery-10.jpg" }
+    ],
+    photoCount: 18,
+    date: "May 2023",
+    category: "portrait",
+    featured: true,
+    color: "#e0f7fa"
+  },
+  {
+    id: "nature-landscape",
+    title: "Nature & Landscape",
+    description: "Breathtaking views from around the world that showcase nature's beauty.",
+    events: ["Landscape"],
+    coverImage: "img-7.jpg",
+    slides: [
+      { Home_Gallery: "gallery-3.jpg", HD: "gallery-3.jpg" },
+      { Home_Gallery: "gallery-4.jpg", HD: "gallery-4.jpg" },
+      { Home_Gallery: "gallery-5.jpg", HD: "gallery-5.jpg" },
+      { Home_Gallery: "gallery-6.jpg", HD: "gallery-6.jpg" },
+      { Home_Gallery: "gallery-7.jpg", HD: "gallery-7.jpg" },
+      { Home_Gallery: "gallery-8.jpg", HD: "gallery-8.jpg" },
+      { Home_Gallery: "gallery-9.jpg", HD: "gallery-9.jpg" },
+      { Home_Gallery: "gallery-10.jpg", HD: "gallery-10.jpg" },
+      { Home_Gallery: "gallery-11.jpg", HD: "gallery-11.jpg" }
+    ],
+    photoCount: 32,
+    date: "April 2023",
+    category: "landscape",
+    featured: true,
+    color: "#c8e6c9"
+  },
+  {
+    id: "urban-exploration",
+    title: "Urban Exploration",
+    description: "Cityscapes and street photography that capture the essence of urban life.",
+    events: ["Urban"],
+    featuredImage: "img-4.jpg",
+    slides: [
+      { Home_Gallery: "gallery-5.jpg", HD: "gallery-5.jpg" },
+      { Home_Gallery: "gallery-2.jpg", HD: "gallery-2.jpg" },
+      { Home_Gallery: "gallery-3.jpg", HD: "gallery-3.jpg" },
+      { Home_Gallery: "gallery-4.jpg", HD: "gallery-4.jpg" }
+    ],
+    photoCount: 24,
+    date: "June 2023",
+    category: "urban",
+    featured: false,
+    color: "#ffe0b2"
+  },
+        {
+          id: 5,
+          title: "Fashion Editorial",
+          description: "High-fashion photography that tells a story and showcases style and creativity.",
+          coverImage: "gallery-2.jpg",
+          images: [
+            "gallery-2.jpg",
+            "gallery-3.jpg",
+            "gallery-4.jpg",
+            "gallery-14.jpg",
+            "gallery-12.jpg",
+            "gallery-11.jpg",
+            "gallery-10.jpg"
+          ],
+          photoCount: 22,
+          date: "July 2023",
+          category: "portrait",
+          featured: false
+        },
+        {
+          id: 6,
+          title: "Coastal Sunrise",
+          description: "Early morning captures of coastal landscapes with stunning light and colors.",
+          coverImage: "img-1.jpg",
+          images: [
+            "gallery-3.jpg",
+            "gallery-4.jpg",
+            "gallery-5.jpg",
+            "gallery-6.jpg",
+            "gallery-7.jpg",
+            "gallery-8.jpg",
+            "gallery-9.jpg",
+            "gallery-10.jpg",
+            "gallery-11.jpg"
+          ],
+          photoCount: 28,
+          date: "August 2023",
+          category: "landscape",
+          featured: false
+        },
+        {
+          id: 7,
+          title: "Traditional Ceremony",
+          description: "Documenting the beauty and richness of traditional wedding ceremonies.",
+          coverImage: "img-5.jpg",
+          images: [
+            "gallery-5.jpg",
+            "gallery-2.jpg",
+            "gallery-3.jpg",
+            "gallery-4.jpg",
+            "gallery-5.jpg",
+            "gallery-6.jpg",
+            "gallery-7.jpg",
+            "gallery-8.jpg"
+          ],
+          photoCount: 36,
+          date: "September 2023",
+          category: "wedding",
+          featured: false
+        },
+        {
+          id: 8,
+          title: "Street Life",
+          description: "Capturing the vibrant energy and stories of everyday life in urban environments.",
+          coverImage: "img-4.jpg",
+          images: [
+            "gallery-5.jpg",
+            "gallery-2.jpg",
+            "gallery-3.jpg",
+            "gallery-4.jpg",
+            "gallery-5.jpg",
+            "gallery-6.jpg",
+            "gallery-7.jpg",
+            "gallery-8.jpg"
+          ],
+          photoCount: 30,
+          date: "October 2023",
+          category: "urban",
+          featured: true
+        }
+      ];
+
+      // DOM elements
+      const albumContainer = document.getElementById('album-container');
+      const albumDetailsPage = document.getElementById('album-details-page');
+      const backToGalleryBtn = document.getElementById('back-to-gallery');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const loadMoreBtn = document.getElementById('load-more');
+      const loadingSkeleton = document.getElementById('loading-skeleton');
+      const featuredAlbumsContainer = document.getElementById('featured-albums');
+
+      // State variables
+      let currentFilter = 'all';
+      let displayedAlbums = 6;
+
+      // Function to create album HTML
+      function createAlbumElement(album) {
+        return `
+          <div class="album-card bg-gray-900 rounded-lg overflow-hidden" data-category="${album.category}" data-aos="fade-up">
+  <div class="relative overflow-hidden">
+    <a href="/Gallery/HD/${album.coverImage}" data-lightbox="home-gallery" data-title="${album.title}">
+      <img src="/Gallery/Home_Gallery/${album.coverImage}" 
+           alt="${album.title}" 
+           loading="lazy"
+           class="w-full album-image h-64 object-cover rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+    </a>
+    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+      <button class="view-album text-white text-lg font-semibold bg-cyan-500 hover:bg-cyan-600 px-6 py-2 rounded-full transition-colors duration-300" data-album-id="${album.id}">View Album</button>
+    </div>
+    <span class="absolute top-4 left-4 bg-cyan-500 text-black text-xs font-bold px-3 py-1 rounded-full">${album.category}</span>
+  </div>
+  <div class="p-6">
+    <h3 class="text-xl font-semibold text-white mb-2">${album.title}</h3>
+    <p class="text-gray-400 mb-4 line-clamp-2">${album.description}</p>
+    <div class="flex justify-between items-center text-sm text-gray-500">
+      <span><i class="fas fa-images mr-1"></i> ${album.photoCount} photos</span>
+      <span><i class="fas fa-calendar-alt mr-1"></i> ${album.date}</span>
+    </div>
+  </div>
+</div>
+
+        `;
+      }
+
+      // Function to create featured album slide
+      function createFeaturedAlbumSlide(album) {
+        return `
+          <li class="splide__slide">
+  <div class="mx-4">
+    <div class="album-card bg-gray-900 rounded-lg overflow-hidden">
+      <div class="relative overflow-hidden">
+        <a href="/Gallery/HD/${album.coverImage}" data-lightbox="featured-gallery" data-title="${album.title}">
+          <img src="/Gallery/Home_Gallery/${album.coverImage}" 
+               alt="${album.title}" 
+               loading="lazy"
+               class="w-full album-image h-64 object-cover rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+        </a>
+        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+          <button class="view-album text-white text-lg font-semibold bg-cyan-500 hover:bg-cyan-600 px-6 py-2 rounded-full transition-colors duration-300" data-album-id="${album.id}">View Album</button>
+        </div>
+        <span class="absolute top-4 left-4 bg-cyan-500 text-black text-xs font-bold px-3 py-1 rounded-full">${album.category}</span>
+      </div>
+      <div class="p-6">
+        <h3 class="text-xl font-semibold text-white mb-2">${album.title}</h3>
+        <p class="text-gray-400 mb-4 line-clamp-2">${album.description}</p>
+        <div class="flex justify-between items-center text-sm text-gray-500">
+          <span><i class="fas fa-images mr-1"></i> ${album.photoCount} photos</span>
+          <span><i class="fas fa-calendar-alt mr-1"></i> ${album.date}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+
+        `;
+      }
+
+      // Function to render albums
+      function renderAlbums() {
+        const filteredAlbums = currentFilter === 'all' 
+          ? albums 
+          : albums.filter(album => album.category === currentFilter);
+        
+        const albumsToShow = filteredAlbums.slice(0, displayedAlbums);
+        
+        albumContainer.innerHTML = albumsToShow.map(album => createAlbumElement(album)).join('');
+        
+        // Add event listeners to all view album buttons
+        document.querySelectorAll('.view-album').forEach(button => {
+          button.addEventListener('click', function() {
+            const albumId = parseInt(this.getAttribute('data-album-id'));
+            showAlbumDetails(albumId);
+          });
+        });
+
+        // Show/hide load more button
+        if (displayedAlbums >= filteredAlbums.length) {
+          loadMoreBtn.style.display = 'none';
+        } else {
+          loadMoreBtn.style.display = 'block';
+        }
+      }
+
+      // Function to render featured albums
+      function renderFeaturedAlbums() {
+        const featuredAlbums = albums.filter(album => album.featured);
+        featuredAlbumsContainer.innerHTML = featuredAlbums.map(album => createFeaturedAlbumSlide(album)).join('');
+        
+        // Initialize Splide carousel
+        new Splide('.splide', {
+          type: 'loop',
+          perPage: 3,
+          perMove: 1,
+          gap: '20px',
+          pagination: false,
+          breakpoints: {
+            1024: {
+              perPage: 2,
+            },
+            768: {
+              perPage: 1,
+            }
+          }
+        }).mount();
+      }
+
+      // Function to generate random size class for collage
+      function getRandomSizeClass() {
+        const sizes = ['size-small', 'size-medium', 'size-wide', 'size-large'];
+        return sizes[Math.floor(Math.random() * sizes.length)];
+      }
+
+      // Function to show album details
+      function showAlbumDetails(albumId) {
+        const album = albums.find(a => a.id === albumId);
+        if (!album) return;
+
+        // Update album details
+        document.getElementById('album-title').textContent = album.title;
+        document.getElementById('album-description').textContent = album.description;
+        document.getElementById('album-date').textContent = album.date;
+        document.getElementById('album-category').textContent = album.category.charAt(0).toUpperCase() + album.category.slice(1);
+        document.getElementById('album-photo-count').textContent = `${album.photoCount} photos`;
+        
+        // Set cover image
+      const imagesGrid = document.getElementById('album-images-grid');
+// Clear any previous grid classes
+imagesGrid.className = 'album-grid-container';
+
+// Create column layout with 4 images per column
+const columnCount = 4;
+const imagesPerColumn = Math.ceil(album.images.length / columnCount);
+
+let columnsHTML = '';
+for (let i = 0; i < columnCount; i++) {
+  let columnImagesHTML = '';
+  const startIndex = i * imagesPerColumn;
+  const endIndex = Math.min(startIndex + imagesPerColumn, album.images.length);
+  
+  for (let j = startIndex; j < endIndex; j++) {
+    const image = album.images[j];
+    columnImagesHTML += `
+      <div class="album-grid-item">
+        <a href="/Gallery/HD/${image}" data-lightbox="album-${album.id}" data-title="${album.title}">
+          <img src="/Gallery/HD/${image}" alt="${album.title}" class="w-full h-auto object-cover rounded-lg transition-all duration-300">
+        </a>
+      </div>
+    `;
+  }
+  
+  columnsHTML += `<div class="album-grid-column">${columnImagesHTML}</div>`;
+}
+
+imagesGrid.innerHTML = columnsHTML;
+
+        // Show details page and hide gallery
+        albumContainer.style.display = 'none';
+        albumDetailsPage.style.display = 'block';
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Function to go back to gallery
+      function backToGallery() {
+        albumDetailsPage.style.display = 'none';
+        albumContainer.style.display = 'grid';
+        renderAlbums();
+      }
+
+      // Function to filter albums
+      function filterAlbums(filter) {
+        currentFilter = filter;
+        displayedAlbums = 6;
+        
+        // Update active state of filter buttons
+        filterButtons.forEach(btn => {
+          if (btn.getAttribute('data-filter') === filter) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+        
+        // Show loading skeleton
+        albumContainer.style.display = 'none';
+        loadingSkeleton.style.display = 'grid';
+        
+        // Simulate loading delay
+        setTimeout(() => {
+          loadingSkeleton.style.display = 'none';
+          albumContainer.style.display = 'grid';
+          renderAlbums();
+        }, 500);
+      }
+
+      // Function to load more albums
+      function loadMoreAlbums() {
+        // Show loading skeleton
+        loadingSkeleton.style.display = 'grid';
+        
+        // Simulate loading delay
+        setTimeout(() => {
+          loadingSkeleton.style.display = 'none';
+          displayedAlbums += 3;
+          renderAlbums();
+        }, 800);
+      }
+      
+      // Event listeners
+      backToGalleryBtn.addEventListener('click', backToGallery);
+      
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const filter = this.getAttribute('data-filter');
+          filterAlbums(filter);
+        });
+      });
+      
+      loadMoreBtn.addEventListener('click', loadMoreAlbums);
+
+      // Initialize the gallery when page loads
+      document.addEventListener('DOMContentLoaded', function() {
+        renderAlbums();
+        renderFeaturedAlbums();
+        
+        // Mobile menu functionality
+        const menuBtn = document.getElementById('menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const backdrop = document.getElementById('backdrop');
+        
+        function openMenu() {
+          mobileMenu.classList.remove('translate-x-full');
+          backdrop.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMenu() {
+          mobileMenu.classList.add('translate-x-full');
+          backdrop.classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        }
+        
+        menuBtn.addEventListener('click', openMenu);
+        closeMenuBtn.addEventListener('click', closeMenu);
+        backdrop.addEventListener('click', closeMenu);
+      });
+      
+    </script>
+</body>
+</html>

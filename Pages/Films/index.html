@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PUpDown Studio - Films</title>
+  <!--CSS-->
+  <link rel="stylesheet" href="/CSS/style.css">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!--Counter-->
+  <script src="https://unpkg.com/countup.js@2.0.8/dist/countUp.umd.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+  <!--Aos animation-->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    /* Custom Styles */
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(to bottom, #0a0a0a, #1a1a2e);
+      min-height: 100vh;
+    }
+    
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 10px 10px 0 0;
+    }
+    
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .video-card {
+      background: linear-gradient(145deg, #1a1a2e, #16213e);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+    
+    .video-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    .video-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(to right, #00FFFF, #0080FF);
+      z-index: 1;
+    }
+    
+    .video-info {
+      padding: 1.25rem;
+    }
+    
+    .video-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .video-stats {
+      display: flex;
+      justify-content: space-between;
+      color: #a0a0a0;
+      font-size: 0.9rem;
+    }
+    
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 3rem;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60%;
+      height: 3px;
+      background: linear-gradient(to right, #00FFFF, #0080FF);
+      border-radius: 2px;
+    }
+    
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      margin: 0 0.5rem 1rem 0;
+    }
+    
+    .filter-btn:hover, .filter-btn.active {
+      background: linear-gradient(to right, #00FFFF, #0080FF);
+      color: #0a0a0a;
+      border-color: transparent;
+    }
+    
+    .hero-section {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                  url('/Gallery/Home page/gallery-12.jpg') center/cover no-repeat;
+      height: 40vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin-top: 80px;
+    }
+    
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #00FFFF, #0080FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .cta-section {
+      background: linear-gradient(to right, #00FFFF, #0080FF);
+      padding: 4rem 0;
+      text-align: center;
+      margin-top: 4rem;
+    }
+    
+    .cta-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    
+    .cta-button {
+      background: #0a0a0a;
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Loading animation */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top-color: #00FFFF;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .cta-title {
+        font-size: 2rem;
+      }
+      
+      .video-title {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+<!--Navbar-->
+<nav class="fixed top-0 left-0 w-full bg-black bg-opacity-50 backdrop-blur-md z-50">
+  <div class="max-w-[90%] xl:max-w-[1400px] mx-auto flex justify-between items-center py-4 px-6 lg:px-12">
+    <!-- Logo -->
+    <a href="../Home/home.html">
+      <img src="/Gallery/Logo/UPD-LOGO.png" alt="Logo" class="h-16 md:h-20">
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button id="menu-btn" class="text-white text-2xl md:hidden focus:outline-none">
+      <i id="menu-icon" class="fas fa-bars"></i>
+    </button>
+
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex space-x-6 text-lg xl:text-xl">
+      <li><a href="../Home/" class="text-white hover:text-cyan-400 transition">Home</a></li>
+      <li><a href="../Gallery/" class="text-white hover:text-cyan-400 transition">Gallery</a></li>
+      <li><a href="films.html" class="text-cyan-400 font-semibold">Films</a></li>
+      <li><a href="../Stories/" class="text-white hover:text-cyan-400 transition">Stories</a></li>
+      <li><a href="../About/" class="text-white hover:text-cyan-400 transition">About</a></li>
+      <li><a href="../Book_Now/" class="border border-cyan-400 text-cyan-400 px-4 py-1 rounded-lg text-lg text-2xl hover:bg-cyan-400 hover:text-white transition duration-300">Book Now</a></li>
+    </ul>
+
+    <!-- Desktop Social Icons -->
+    <div class="hidden md:flex space-x-6 text-2xl">
+      <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <!-- Backdrop -->
+  <div id="backdrop" class="fixed inset-0 bg-black bg-opacity-70 hidden z-40 transition-opacity duration-300 ease-in-out"></div>
+
+  <!-- Mobile Sidebar -->
+  <aside id="mobile-menu" 
+  class="fixed top-0 right-0 h-auto w-4/5 max-w-xs flex flex-col bg-black bg-opacity-95 shadow-2xl z-50 
+  transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+
+    <!-- Close Button -->
+    <button id="close-menu" class="absolute top-5 right-5 text-3xl text-white hover:text-cyan-400 transition-all focus:outline-none z-50" aria-label="Close menu">
+      <i class="fas fa-times"></i>
+    </button>
+    <nav class="flex-1 flex flex-col justify-center px-8 space-y-7 text-lg mt-14">
+      <a href="../Home/" class="text-white hover:text-cyan-400 transition">Home</a>
+      <a href="../Gallery/" class="text-white hover:text-cyan-400 transition">Gallery</a>
+      <a href="films.html" class="text-cyan-400 font-semibold">Films</a>
+      <a href="../Stories/" class="text-white hover:text-cyan-400 transition">Stories</a>
+      <a href="../About/" class="text-white hover:text-cyan-400 transition">About</a>
+       <a href="../Book_Now/" class="flex items-center justify-center gap-2 border border-cyan-400 text-cyan-400 px-4 py-2 rounded-lg text-lg font-semibold hover:bg-cyan-400 hover:text-white transition duration-300 shadow-lg">
+        <i class="fas fa-calendar-check text-xl"></i>
+        Book Now
+      </a>
+    </nav>
+    <div class="border-t border-white mt-5 mb-3 pt-5 px-8 flex space-x-6 text-2xl">
+      <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+      <a href="tel:+919688169797" class="text-white hover:text-cyan-400"><i class="fas fa-phone"></i></a>
+    </div>
+  </aside>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container mx-auto px-4">
+    <h1 class="hero-title">Our Films</h1>
+    <p class="hero-subtitle">Experience the magic of storytelling through our cinematic wedding films that capture love, emotion, and unforgettable moments.</p>
+  </div>
+</section>
+
+<!-- Films Section -->
+<section class="py-16 px-4 md:px-8">
+  <div class="container mx-auto">
+    <h2 class="section-title text-3xl md:text-4xl font-bold mb-8">Featured Wedding Films</h2>
+    
+    <!-- Filter Buttons -->
+    <div class="flex flex-wrap justify-center mb-12">
+      <button class="filter-btn active" data-filter="all">All Films</button>
+      <button class="filter-btn" data-filter="wedding">Wedding Highlights</button>
+      <button class="filter-btn" data-filter="pre-wedding">Pre-Wedding</button>
+      <button class="filter-btn" data-filter="christian">Christian Weddings</button>
+    </div>
+    
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+    </div>
+    
+    <!-- Videos Grid -->
+    <div id="videos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Videos will be dynamically inserted here -->
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<!-- <section class="cta-section">
+  <div class="container mx-auto px-4">
+    <h2 class="cta-title">Ready to Create Your Story?</h2>
+    <p class="text-xl mb-8 max-w-2xl mx-auto">Let us capture your special moments with the same cinematic quality you see in our films.</p>
+    <a href="../Book_Now/" class="cta-button">Book Your Session Now</a>
+  </div>
+</section> -->
+
+<!-- Video Template (hidden) -->
+<template id="video-template">
+  <div class="video-card" data-category="">
+    <div class="video-container">
+      <iframe class="youtube-iframe" frameborder="0" allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+      </iframe>
+    </div>
+    <div class="video-info">
+      <h3 class="video-title"></h3>
+      <div class="video-stats">
+        <span class="flex items-center">
+          <i class="fas fa-eye mr-1"></i>
+          <span class="video-views"></span>
+        </span>
+        <span class="flex items-center">
+          <i class="fas fa-thumbs-up mr-1"></i>
+          <span class="video-likes"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Floating Action Buttons -->
+<div class="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
+  <!-- WhatsApp Icon -->
+  <a href="https://wa.me/+91 8778542024" target="_blank"
+     class="relative group bg-gradient-to-br from-green-400 to-green-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+    <!-- Tooltip -->
+    <span class="absolute right-full top-1/2 transform -translate-y-1/2 mr-3 opacity-0 group-hover:opacity-100 transition-opacity bg-white text-black text-xs px-2 py-1 rounded shadow">
+      Chat on WhatsApp
+    </span>
+    <!-- Pulse Animation -->
+    <span class="absolute animate-ping w-full h-full rounded-full bg-green-400 opacity-75 top-0 left-0 z-[-1]"></span>
+  </a>
+</div>
+
+<!-- Footer -->
+    <footer class="bg-black py-12 px-6 border-t border-gray-800">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-4">UpDown</h3>
+                    <p class="text-gray-400">Capturing life's most precious moments with artistry and passion.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../Home/"class="text-gray-400 hover:text-cyan-400">Home</a></li>
+                        <li><a href="../Gallery/" class="text-gray-400 hover:text-cyan-400">Gallery</a></li>
+                        <li><a href="../Films/" class="text-gray-400 hover:text-cyan-400">Films</a></li>
+                        <li><a href="../Stories/" class="text-gray-400 hover:text-cyan-400">Stories</a></li>
+                        <li><a href="../About/" class="text-gray-400 hover:text-cyan-400">Contact</a></li>
+                        <li><a href="../Book_Now/" class="text-gray-400 hover:text-cyan-400">Book Now</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Portrait Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Wedding Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Landscape Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Commercial Photography</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="https://www.instagram.com/updown_studios/" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.youtube.com/@UpdownStudioss" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.youtube.com/@UpdownStudioss" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <a href="mailto:updownstudios1@gmail.com"><p class="text-gray-400 hover:text-cyan-400">updownstudios1@gmail.com</p></a>
+                    <a href="https://wa.me/+91 7010230672" target="_blank"><p class="text-gray-400 hover:text-cyan-400">+91 7010230672</p></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>© 2025 UpDown Photography. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+  // Enhanced video data with categories
+  const videos = [
+    {
+      id: '8FGZcxzM1ro',
+      title: 'Two hearts beating as one ❤️ | Dhanesh & Lavanya',
+      views: '64K',
+      likes: '4.8K',
+      category: 'wedding'
+    },
+    {
+      id: 'sGizmGjcDPE',
+      title: 'Wedding Moments Of Mano & Meera',
+      views: '89K',
+      likes: '6.5K',
+      category: 'wedding'
+    },
+    {
+      id: 'oOWfG-4ZOjg',
+      title: 'Gorgeous Couples | Ishu & Vicky Beach Wedding',
+      views: '112K',
+      likes: '7.9K',
+      category: 'wedding'
+    },
+    {
+      id: 'EfWm3h7ruzE',
+      title: 'Capture Life\'s Best Moments',
+      views: '72K',
+      likes: '5.1K',
+      category: 'pre-wedding'
+    },
+    {
+      id: 'TahvVNG2cQw', 
+      title: 'Wedding Highlights | GANAPATHY & SARANYA',
+      views: '125K',
+      likes: '8.2K',
+      category: 'wedding'
+    },
+    {
+      id: 'sC13eW-eBSs',
+      title: 'Rathish X Vigneshwari | Beautiful Tamil Wedding',
+      views: '156K',
+      likes: '10.3K',
+      category: 'wedding'
+    },
+    {
+      id: '115ddYxd8LY',
+      title: 'VICKY - NANDY | PRE WEDDING SHOOT',
+      views: '93K',
+      likes: '6.7K',
+      category: 'pre-wedding'
+    },
+    {
+      id: 'L29Ije11EUQ',
+      title: 'Christian Wedding Highlights of Sesu and Jayasi',
+      views: '205K',
+      likes: '12.4K',
+      category: 'christian'
+    },
+    {
+      id: 'Cho-SZqIVrU',
+      title: 'Beautiful PreWed For Govarthanan & VishnuPriya',
+      views: '78K',
+      likes: '5.6K',
+      category: 'pre-wedding'
+    }
+  ];
+
+  // Function to load videos
+  function loadVideos(filter = 'all') {
+    const container = document.getElementById('videos-container');
+    const template = document.getElementById('video-template');
+    const loading = document.getElementById('loading');
+    
+    // Show loading spinner
+    container.innerHTML = '';
+    loading.classList.remove('hidden');
+    
+    // Simulate loading delay for better UX
+    setTimeout(() => {
+      loading.classList.add('hidden');
+      
+      const filteredVideos = filter === 'all' ? videos : videos.filter(video => video.category === filter);
+      
+      if (filteredVideos.length === 0) {
+        container.innerHTML = '<p class="text-center text-xl col-span-3 py-10">No videos found in this category.</p>';
+        return;
+      }
+      
+      filteredVideos.forEach(video => {
+        const clone = template.content.cloneNode(true);
+        
+        // Set video iframe
+        const iframe = clone.querySelector('.youtube-iframe');
+        iframe.src = `https://www.youtube.com/embed/${video.id}?rel=0&modestbranding=1`;
+        
+        // Set video info
+        clone.querySelector('.video-title').textContent = video.title;
+        clone.querySelector('.video-views').textContent = video.views;
+        clone.querySelector('.video-likes').textContent = video.likes;
+        clone.querySelector('.video-card').setAttribute('data-category', video.category);
+        
+        container.appendChild(clone);
+      });
+    }, 800); // Simulate loading time
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Load all videos initially
+    loadVideos();
+    
+    // Filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Update active button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        // Load filtered videos
+        const filter = button.getAttribute('data-filter');
+        loadVideos(filter);
+      });
+    });
+    
+    // Mobile menu toggle (from common.js)
+    const menuBtn = document.getElementById('menu-btn');
+    const closeMenu = document.getElementById('close-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const backdrop = document.getElementById('backdrop');
+    const menuIcon = document.getElementById('menu-icon');
+
+    function toggleMenu() {
+      mobileMenu.classList.toggle('translate-x-full');
+      backdrop.classList.toggle('hidden');
+      document.body.style.overflow = mobileMenu.classList.contains('translate-x-full') ? 'auto' : 'hidden';
+    }
+
+    menuBtn.addEventListener('click', toggleMenu);
+    closeMenu.addEventListener('click', toggleMenu);
+    backdrop.addEventListener('click', toggleMenu);
+
+    // Close menu when clicking on links
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', toggleMenu);
+    });
+  });
+</script>
+<script src="/JS/common.js"></script>
+</body>
+</html>

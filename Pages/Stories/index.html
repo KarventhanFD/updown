@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UpDown Studio-Stories</title>
+  <!--CSS-->
+  <link rel="stylesheet" href="/CSS/style.css">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!--Montserrat font-->
+   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0.4; }
+      to { opacity: 1; }
+    }
+    .slide {
+  opacity: 0;
+  transition: opacity 1s ease-in-out; /* Smooth fade */
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.slide:not(.active) {
+  z-index: 0;
+}
+    .gradient-overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 50%);
+    }
+    
+    /* Responsive adjustments */
+    .album-container {
+      min-height: auto;
+      margin-bottom: 60px;
+    }
+    
+    @media (min-width: 1024px) {
+      .album-container {
+        min-height: 70vh;
+        margin-bottom: 80px;
+      }
+    }
+    
+    .image-side {
+      height: 400px;
+    }
+    
+    @media (min-width: 768px) {
+      .image-side {
+        height: 450px;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .image-side {
+        height: 500px;
+      }
+    }
+    
+    .featured-image-container {
+      width: 280px;
+      height: 380px;
+    }
+    
+    @media (min-width: 768px) {
+      .featured-image-container {
+        width: 300px;
+        height: 400px;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .featured-image-container {
+        width: 350px;
+        height: 450px;
+      }
+    }
+    
+    .slideshow-container {
+      width: 100%;
+      height: 300px;
+    }
+    
+    @media (min-width: 768px) {
+      .slideshow-container {
+        width: 400px;
+        height: 350px;
+      }
+    }
+    
+    .content-side {
+      padding: 2rem 1rem;
+    }
+    
+    @media (min-width: 768px) {
+      .content-side {
+        padding: 2rem;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .content-side {
+        padding: 3rem;
+      }
+    }
+    
+    .offset-position {
+      position: relative;
+    }
+    
+    @media (min-width: 1024px) {
+      .offset-position {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  </style>
+</head>
+<body class="bg-black">
+  <!--Navbar-->
+  <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-50 backdrop-blur-md z-50">
+  <div class="max-w-[90%] xl:max-w-[1400px] mx-auto flex justify-between items-center py-4 px-6 lg:px-12">
+    <!-- Logo -->
+    <a href="../Home/">
+      <img src="/Gallery/Logo/UPD-LOGO.png" alt="Logo" class="h-16 md:h-20">
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button id="menu-btn" class="text-white text-2xl md:hidden focus:outline-none">
+      <i id="menu-icon" class="fas fa-bars"></i>
+    </button>
+
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex space-x-6 text-lg xl:text-xl">
+      <li><a href="../Home/" class="text-white hover:text-cyan-400 transition">Home</a></li>
+      <li><a href="../Gallery/" class="text-white hover:text-cyan-400 transition">Gallery</a></li>
+      <li><a href="../Films/" class="text-white hover:text-cyan-400 transition">Films</a></li>
+      <li><a href="../Stories/" class="text-cyan-400 font-semibold">Stories</a></li>
+      <li><a href="../About/" class="text-white hover:text-cyan-400 transition">About</a></li>
+ <li><a href="../Book_Now/" class="border border-cyan-400 text-cyan-400 px-4 py-1 rounded-lg text-lg text-2xl hover:bg-cyan-400 hover:text-white transition duration-300">Book Now</a></li></ul>
+
+    <!-- Desktop Social Icons -->
+    <div class="hidden md:flex space-x-6 text-2xl">
+      <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <!-- Backdrop -->
+  <div id="backdrop" class="fixed inset-0 bg-black bg-opacity-70 hidden z-40 transition-opacity duration-300 ease-in-out"></div>
+
+  <!-- Mobile Sidebar -->
+  <aside id="mobile-menu" 
+  class="fixed top-0 right-0 h-auto w-4/5 max-w-xs flex flex-col bg-black bg-opacity-95 shadow-2xl z-50 
+  transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+
+    <!-- Close Button -->
+    <button id="close-menu" class="absolute top-5 right-5 text-3xl text-white hover:text-cyan-400 transition-all focus:outline-none z-50" aria-label="Close menu">
+      <i class="fas fa-times"></i>
+    </button>
+    <nav class="flex-1 flex flex-col justify-center px-8 space-y-7 text-lg mt-14">
+      <a href="../Home/" class="text-white hover:text-cyan-400 transition">Home</a>
+      <a href="../Gallery/" class="text-white hover:text-cyan-400 transition">Gallery</a>
+      <a href="../Films/" class="text-white hover:text-cyan-400 transition">Films</a>
+      <a href="../Stories/" class="text-cyan-400 font-semibold">Stories</a>
+      <a href="../About/" class="text-white hover:text-cyan-400 transition">About</a>
+      <a href="../Book_Now/" class="flex items-center justify-center gap-2 border border-cyan-400 text-cyan-400 px-4 py-2 rounded-lg text-lg font-semibold hover:bg-cyan-400 hover:text-white transition duration-300 shadow-lg">
+        <i class="fas fa-calendar-check text-xl"></i>
+        Book Now
+      </a>
+    </nav>
+    <div class="border-t border-white mt-5 mb-3 pt-5 px-8 flex space-x-6 text-2xl">
+      <a href="https://www.instagram.com/updown_studios/" class="text-white hover:text-cyan-400"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.youtube.com/@UpdownStudioss" class="text-white hover:text-cyan-400"><i class="fab fa-youtube"></i></a>
+      <a href="tel:+919688169797" class="text-white hover:text-cyan-400"><i class="fas fa-phone"></i></a>
+    </div>
+  </aside>
+</nav>
+
+
+  <section class="py-20 px-4 mt-10 md:px-8 lg:px-12 xl:px-20 mx-auto max-w-[1400px]" id="albums-container">
+    <!-- Albums will be loaded here -->
+</section>
+
+<!-- Add this before closing </body> -->  
+<div class="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
+  <!-- WhatsApp Icon -->
+  <a href="https://wa.me/+91 8778542024" target="_blank"
+     class="relative group bg-gradient-to-br from-green-400 to-green-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+    <!-- Tooltip -->
+    <span class="absolute right-full top-1/2 transform -translate-y-1/2 mr-3 opacity-0 group-hover:opacity-100 transition-opacity bg-white text-black text-xs px-2 py-1 rounded shadow">
+      Chat on WhatsApp
+    </span>
+    <!-- Pulse Animation -->    
+    <span class="absolute animate-ping w-full h-full rounded-full bg-green-400 opacity-75 top-0 left-0 z-[-1]"></span>
+  </a>
+
+  <!-- Phone Icon -->
+  <!-- <a href="tel:+91 96881 69797"
+     class="relative group bg-gradient-to-br from-cyan-400 to-blue-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20 22.621l-3.521-6.795c-.008.004-1.974.97-2.064 1.011-2.24 1.086-6.799-7.82-4.609-8.994l2.083-1.026-3.493-6.817-2.106 1.039c-7.202 3.755 4.233 25.982 11.6 22.615.121-.055 2.102-1.029 2.11-1.033z"/>
+    </svg>
+    
+    <span class="absolute right-full top-1/2 transform -translate-y-1/2 mr-3 opacity-0 group-hover:opacity-100 transition-opacity bg-white text-black text-xs px-2 py-1 rounded shadow">
+      Call Us
+    </span>
+    
+    <span class="absolute animate-ping w-full h-full rounded-full bg-cyan-400 opacity-75 top-0 left-0 z-[-1]"></span>
+  </a>  -->
+</div>
+
+
+<!-- Footer Section -->
+  <footer class="bg-black py-12 px-6 border-t border-gray-800">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-4">UpDown</h3>
+                    <p class="text-gray-400">Capturing life's most precious moments with artistry and passion.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../Home/"class="text-gray-400 hover:text-cyan-400">Home</a></li>
+                        <li><a href="../Gallery/" class="text-gray-400 hover:text-cyan-400">Gallery</a></li>
+                        <li><a href="../Films/" class="text-gray-400 hover:text-cyan-400">Films</a></li>
+                        <li><a href="../Stories/" class="text-gray-400 hover:text-cyan-400">Stories</a></li>
+                        <li><a href="../About/" class="text-gray-400 hover:text-cyan-400">Contact</a></li>
+                        <li><a href="../Book_Now/" class="text-gray-400 hover:text-cyan-400">Book Now</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Portrait Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Wedding Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Landscape Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-cyan-400">Commercial Photography</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="https://www.instagram.com/updown_studios/" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.youtube.com/@UpdownStudioss" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.youtube.com/@UpdownStudioss" class="text-cyan-400 hover:text-cyan-300 text-xl"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <a href="mailto:updownstudios1@gmail.com"><p class="text-gray-400 hover:text-cyan-400">updownstudios1@gmail.com</p></a>
+                    <a href="https://wa.me/+91 7010230672" target="_blank"><p class="text-gray-400 hover:text-cyan-400">+91 7010230672</p></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>© 2025 UpDown Photography. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+<script src="/JS/stories.js"></script>
+<script src="/JS/common.js"></script>
+<script>
+  
+//     // Embedded JSON data
+//     const albumsData = {
+//      "albums": [
+//     {
+//       "id": "varun-sindhu",
+//       "title": "Varun & Sindhu",
+//       "events": ["Wedding", "Engagement"],
+//       "featuredImage": "gallery-10.jpg", // thumbnail
+//       "slides": [
+//         { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
+//         { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
+//         { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
+//         { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
+//       ],
+//       "color": "#f5dbd6"
+//     },
+  
+//          {
+//       "id": "varun-sindhu",
+//       "title": "Varun & Sindhu",
+//       "events": ["Wedding", "Engagement"],
+//       "featuredImage": "gallery-10-thumb.jpg", // thumbnail
+//       "slides": [
+//         { thumb: "gallery-11-thumb.jpg", HD: "gallery-11-HD.jpg" },
+//         { thumb: "gallery-12-thumb.jpg", HD: "gallery-12-HD.jpg" },
+//         { thumb: "gallery-13-thumb.jpg", HD: "gallery-13-HD.jpg" },
+//         { thumb: "gallery-14-thumb.jpg", HD: "gallery-14-HD.jpg" }
+//       ],
+//       "color": "#f5dbd6"
+//     },
+//          {
+//       "id": "varun-sindhu",
+//       "title": "Varun & Sindhu",
+//       "events": ["Wedding", "Engagement"],
+//       "featuredImage": "gallery-10-thumb.jpg", // thumbnail
+//       "slides": [
+//         { thumb: "gallery-11-thumb.jpg", HD: "gallery-11-HD.jpg" },
+//         { thumb: "gallery-12-thumb.jpg", HD: "gallery-12-HD.jpg" },
+//         { thumb: "gallery-13-thumb.jpg", HD: "gallery-13-HD.jpg" },
+//         { thumb: "gallery-14-thumb.jpg", HD: "gallery-14-HD.jpg" }
+//       ],
+//       "color": "#f5dbd6"
+//     },
+//       ]
+//     };
+
+//     document.addEventListener('DOMContentLoaded', function() {
+//       const container = document.getElementById('albums-container');
+      
+//       // Create each album
+//       albumsData.albums.forEach((album, index) => {
+//         const isEven = index % 2 === 0;
+        
+//         const albumHTML = `
+// <div class="flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} w-full album-container max-w-[1200px] mx-auto gap-8 lg:gap-12">
+    
+//     <!-- Static Image Side -->
+//     <div class="relative w-full lg:w-2/5 image-side flex items-center ${isEven ? 'justify-end lg:justify-end' : 'justify-start lg:justify-start'} px-4 md:px-6" style="background-color: ${album.color}">
+//         <div class="offset-position ${isEven ? 'lg:right-[-60px] xl:right-[-80px]' : 'lg:left-[-60px] xl:left-[-80px]'} bg-white shadow-lg p-4 featured-image-container rounded z-10">
+//             <img 
+//                 src="/Gallery/Home_Gallery/${album.featuredImage}" 
+//                 alt="${album.title}" 
+//                 class="w-full h-full object-cover rounded"
+//                 loading="lazy" 
+//                 decoding="async" 
+//             />
+//         </div>
+//     </div>
+
+//     <!-- Slideshow Side -->
+//     <div class="flex flex-col justify-center w-full lg:w-3/5 text-white content-side px-4 md:px-8 mt-20">
+//         <div class="w-full mx-auto flex flex-col items-center">
+            
+//             <!-- Title Above Slideshow -->
+//             <div class="text-center mb-6 w-full">
+//                 <h2 class="text-3xl md:text-4xl font-serif font-semibold">${album.title}</h2>
+//                 <p class="text-lg md:text-xl font-light mt-2">
+//                     ${album.events.map(event => `<span>${event}</span>`).join('<span class="mx-1">|</span>')}
+//                 </p>
+//             </div>
+            
+//             <!-- Slideshow -->
+//             <div class="relative slideshow-container overflow-hidden rounded shadow-lg w-full max-w-[500px]">
+//                 <div class="relative w-full h-full" id="slideshow-${album.id}">
+//                     ${album.slides.map((slide, slideIndex) => `
+//                         <div class="slide absolute inset-0 w-full h-full ${slideIndex === 0 ? '' : 'opacity-0'}">
+//                             <img 
+//                                 src="/Gallery/Home page/${slide}" 
+//                                 alt="Slide ${slideIndex + 1}" 
+//                                 class="w-full h-full object-cover"
+//                                 loading="lazy"
+//                                 decoding="async"
+//                             />
+//                             <div class="gradient-overlay absolute inset-0"></div>
+//                         </div>
+//                     `).join('')}
+//                 </div>
+
+//                 <!-- Navigation Dots -->
+//                 <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10">
+//                     ${album.slides.map((_, slideIndex) => `
+//                         <button 
+//                             class="w-3 h-3 rounded-full bg-white ${slideIndex === 0 ? 'bg-opacity-100' : 'bg-opacity-70'} hover:bg-opacity-100 dot-btn" 
+//                             data-slide="${slideIndex}" 
+//                             data-slideshow="slideshow-${album.id}">
+//                         </button>
+//                     `).join('')}
+//                 </div>
+//             </div>
+//         </div>
+//     </div>
+// </div>
+// `;
+
+        
+//         container.insertAdjacentHTML('beforeend', albumHTML);
+//       });
+      
+//       // Initialize all slideshows
+//       initializeSlideshows();
+      
+//       // Mobile menu functionality
+//       const menuBtn = document.getElementById('menu-btn');
+//       const mobileMenu = document.getElementById('mobile-menu');
+//       const closeMenu = document.getElementById('close-menu');
+      
+//       menuBtn.addEventListener('click', () => {
+//         mobileMenu.classList.remove('translate-x-full');
+//         mobileMenu.classList.add('translate-x-0');
+//       });
+      
+//       closeMenu.addEventListener('click', () => {
+//         mobileMenu.classList.remove('translate-x-0');
+//         mobileMenu.classList.add('translate-x-full');
+//       });
+//     });
+
+    function initializeSlideshows() {
+      document.querySelectorAll('[id^="slideshow-"]').forEach(container => {
+        const slideshowId = container.id;
+        let currentIndex = 0;
+        let interval = null;
+        const slides = container.querySelectorAll('.slide');
+        const dots = document.querySelectorAll(`#${slideshowId} + div .dot-btn`);
+
+        function showSlide(index) {
+  currentIndex = (index + slides.length) % slides.length;
+
+  slides.forEach((slide, i) => {
+    if (i === currentIndex) {
+      slide.classList.add('active');
+    } else {
+      slide.classList.remove('active');
+    }
+  });
+
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('bg-opacity-100', i === currentIndex);
+    dot.classList.toggle('bg-opacity-70', i !== currentIndex);
+  });
+}
+
+
+        function startSlideshow() {
+          clearInterval(interval);
+          interval = setInterval(() => {
+            showSlide(currentIndex + 1);
+          }, 3000);
+        }
+
+        // Initialize
+        showSlide(0);
+        startSlideshow();
+        
+        // Pause on hover
+        container.parentElement.addEventListener('mouseenter', () => {
+          clearInterval(interval);
+        });
+        container.parentElement.addEventListener('mouseleave', () => {
+          startSlideshow();
+        });
+        
+        // Dot navigation
+        dots.forEach(dot => {
+          dot.addEventListener('click', () => {
+            const slideIndex = parseInt(dot.getAttribute('data-slide'));
+            showSlide(slideIndex);
+          });
+        });
+      });
+    }
+ 
+ </script>
+</body>
+</html>
