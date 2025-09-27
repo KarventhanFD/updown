@@ -150,7 +150,7 @@ const albums = [
             return `
                 <div class="bg-[#C4B5FD] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
                     <div class="relative overflow-hidden">
-                        <img src="../Gallery/Home page/${album.coverImage}" alt="${album.title}" class="w-full album-image hover:scale-110">
+                        <img src="/Gallery/Home page/${album.coverImage}" alt="${album.title}" class="w-full album-image hover:scale-110">
                         <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
                             <button class="view-album text-white text-lg font-semibold bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-full transition-colors duration-300" data-album-id="${album.id}">View Album</button>
                         </div>

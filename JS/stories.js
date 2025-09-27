@@ -3,44 +3,41 @@
     const albumsData = {
       "albums": [
         {
-          "id": "varun-sindhu",
-          "title": "Varun & Sindhu",
-          "events": ["Wedding", "Engagement"],
-          "featuredImage": "gallery-10.jpg",
-          "slides": [
-            "gallery-11.jpg",
-            "gallery-12.jpg",
-            "gallery-13.jpg",
-            "gallery-14.jpg",
-            "gallery-6.jpg"
-          ],
-          "color": "#f5dbd6" // Soft pink
-        },
+      "id": "varun-sindhu",
+      "title": "Varun & Sindhu",
+      "events": ["Wedding", "Engagement"],
+      "featuredImage": "gallery-10.jpg", // thumbnail
+      "slides": [
+        { Home_Gallery: "IMG-4.JPG", HD: "img-4.jpg" },
+        { Home_Gallery: "img-6.jpg", HD: "img-6.jpg" },
+        { Home_Gallery: "img-2.jpg", HD: "img-2.jpg" },
+        { Home_Gallery: "img-7.jpg", HD: "img-7.jpg" }
+      ],
+      "color": "#f5dbd6"
+    },
         {
-          "id": "ajay-priya",
-          "title": "Ajay & Priya",
-          "events": ["Haldi", "Sangeet"],
-          "featuredImage": "gallery-13.jpg",
-          "slides": [
-            "gallery-12.jpg",
-            "gallery-11.jpg",
-            "gallery-10.jpg",
-            "gallery-6.jpg",
-            "gallery-14.jpg"
-          ],
-          "color": "#A3E635" // Soft green
-        },
+      "id": "varun-sindhu",
+      "title": "Varun & Sindhu",
+      "events": ["Wedding", "Engagement"],
+      "featuredImage": "gallery-10.jpg", // thumbnail
+      "slides": [
+        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
+        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
+        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
+        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
+      ],
+      "color": "#f5dbd6"
+    },
         {
           "id": "another-couple",
           "title": "Another Couple",
           "events": ["Haldi", "Sangeet"],
           "featuredImage": "gallery-13.jpg",
           "slides": [
-            "gallery-12.jpg",
-            "gallery-11.jpg",
-            "gallery-10.jpg",
-            "gallery-6.jpg",
-            "gallery-14.jpg"
+        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
+        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
+        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
+        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" }
           ],
           "color": "#d6f5e3" // Soft green
         }
@@ -55,17 +52,25 @@
         const isEven = index % 2 === 0;
         
         const albumHTML = `
-        <div class="flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} w-full album-container max-w-[1200px] mx-auto gap-8 lg:gap-12">
+<div class="flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} w-full album-container max-w-[1200px] mx-auto gap-8 lg:gap-12">
+    
     <!-- Static Image Side -->
     <div class="relative w-full lg:w-2/5 image-side flex items-center ${isEven ? 'justify-end lg:justify-end' : 'justify-start lg:justify-start'} px-4 md:px-6" style="background-color: ${album.color}">
         <div class="offset-position ${isEven ? 'lg:right-[-60px] xl:right-[-80px]' : 'lg:left-[-60px] xl:left-[-80px]'} bg-white shadow-lg p-4 featured-image-container rounded z-10">
-            <img src="../Gallery/Home page/${album.featuredImage}" alt="${album.title}" class="w-full h-full object-cover rounded"/>
+            <img 
+                src="/Gallery/Home page/${album.featuredImage}" 
+                alt="${album.title}" 
+                class="w-full h-full object-cover rounded"
+                loading="lazy" 
+                decoding="async" 
+            />
         </div>
     </div>
 
     <!-- Slideshow Side -->
     <div class="flex flex-col justify-center w-full lg:w-3/5 text-white content-side px-4 md:px-8 mt-20">
         <div class="w-full mx-auto flex flex-col items-center">
+            
             <!-- Title Above Slideshow -->
             <div class="text-center mb-6 w-full">
                 <h2 class="text-3xl md:text-4xl font-serif font-semibold">${album.title}</h2>
@@ -79,7 +84,13 @@
                 <div class="relative w-full h-full" id="slideshow-${album.id}">
                     ${album.slides.map((slide, slideIndex) => `
                         <div class="slide absolute inset-0 w-full h-full ${slideIndex === 0 ? '' : 'opacity-0'}">
-                            <img src="../Gallery/Home page/${slide}" alt="Slide ${slideIndex + 1}" class="w-full h-full object-cover"/>
+                            <img 
+                                src="/Gallery/Home_Gallery/${slide.Home_Gallery}"
+                                alt="Slide ${slideIndex + 1}" 
+                                class="w-full h-full object-cover"
+                                loading="lazy"
+                                decoding="async"
+                            />
                             <div class="gradient-overlay absolute inset-0"></div>
                         </div>
                     `).join('')}
@@ -88,16 +99,20 @@
                 <!-- Navigation Dots -->
                 <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10">
                     ${album.slides.map((_, slideIndex) => `
-                        <button class="w-3 h-3 rounded-full bg-white ${slideIndex === 0 ? 'bg-opacity-100' : 'bg-opacity-70'} hover:bg-opacity-100 dot-btn" 
-                                data-slide="${slideIndex}" 
-                                data-slideshow="slideshow-${album.id}"></button>
+                        <button 
+                            class="w-3 h-3 rounded-full bg-white ${slideIndex === 0 ? 'bg-opacity-100' : 'bg-opacity-70'} hover:bg-opacity-100 dot-btn" 
+                            data-slide="${slideIndex}" 
+                            data-slideshow="slideshow-${album.id}">
+                        </button>
                     `).join('')}
                 </div>
             </div>
         </div>
     </div>
 </div>
-        `;
+`;
+
+    
         
         container.insertAdjacentHTML('beforeend', albumHTML);
       });

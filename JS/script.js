@@ -29,14 +29,21 @@ window.addEventListener("scroll", () => {
   });
 });
 
-// ---------------------------- Hero Carousel (Fix for stacking) ---------------------------- //
+// ---------------------------- Hero Carousel (Fade + Smooth Transition) ---------------------------- //
 const carouselItems = document.querySelectorAll(".carousel-item");
 let currentIndex = 0;
 
 function showSlide(index) {
   carouselItems.forEach((item, i) => {
-    item.classList.toggle("active", i === index);
-    item.style.display = i === index ? "block" : "none"; // Fix stacking issue
+    if (i === index) {
+      item.classList.add("opacity-100");
+      item.classList.remove("opacity-0");
+      item.style.zIndex = 10;
+    } else {
+      item.classList.add("opacity-0");
+      item.classList.remove("opacity-100");
+      item.style.zIndex = 0;
+    }
   });
 }
 
@@ -45,10 +52,13 @@ function nextSlide() {
   showSlide(currentIndex);
 }
 
-setInterval(nextSlide, 3000); // Auto-play every 3s
-showSlide(currentIndex); // Initialize
+// Auto-play every 3s
+setInterval(nextSlide, 3000);
 
-// ---------------------------- Mobile Menu Toggle ---------------------------- //
+// Initialize first slide
+showSlide(currentIndex);
+
+
 
 
 // ---------------------------- Latest Collection Carousel ---------------------------- //
