@@ -1,45 +1,57 @@
-
-    // Embedded JSON data
+// Embedded JSON data with dummy images
     const albumsData = {
       "albums": [
         {
-      "id": "varun-sindhu",
-      "title": "Varun & Sindhu",
-      "events": ["Wedding", "Engagement"],
-      "featuredImage": "gallery-10.jpg", // thumbnail
-      "slides": [
-        { Home_Gallery: "IMG-4.JPG", HD: "img-4.jpg" },
-        { Home_Gallery: "img-6.jpg", HD: "img-6.jpg" },
-        { Home_Gallery: "img-2.jpg", HD: "img-2.jpg" },
-        { Home_Gallery: "img-7.jpg", HD: "img-7.jpg" }
-      ],
-      "color": "#f5dbd6"
-    },
-        {
-      "id": "varun-sindhu",
-      "title": "Varun & Sindhu",
-      "events": ["Wedding", "Engagement"],
-      "featuredImage": "gallery-10.jpg", // thumbnail
-      "slides": [
-        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
-        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
-        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
-        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
-      ],
-      "color": "#f5dbd6"
-    },
-        {
-          "id": "another-couple",
-          "title": "Another Couple",
-          "events": ["Haldi", "Sangeet"],
-          "featuredImage": "gallery-13.jpg",
+          "id": "varun-sindhu",
+          "title": "Varun & Sindhu",
+          "events": ["Wedding", "Engagement"],
+          "featuredImage": "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400&h=500&fit=crop",
           "slides": [
-        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
-        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
-        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" },
-        { Home_Gallery: "img-1.JPG", HD: "img-1.jpg" }
+            "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1511285560982-1351cdeb9821?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&h=400&fit=crop"
           ],
-          "color": "#d6f5e3" // Soft green
+          "color": "#f5dbd6"
+        },
+        {
+          "id": "rakesh-priya",
+          "title": "Rakesh & Priya",
+          "events": ["Haldi", "Mehendi"],
+          "featuredImage": "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400&h=500&fit=crop",
+          "slides": [
+            "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1507504034443-144535e5bc54?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1520854221256-17451cc330e7?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1511285560982-1351cdeb9821?w=600&h=400&fit=crop"
+          ],
+          "color": "#d6e4ff"
+        },
+        {
+          "id": "arun-anjali",
+          "title": "Arun & Anjali",
+          "events": ["Wedding", "Reception"],
+          "featuredImage": "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=400&h=500&fit=crop",
+          "slides": [
+            "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1507504034443-144535e5bc54?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1520854221256-17451cc330e7?w=600&h=400&fit=crop"
+          ],
+          "color": "#ffe6f0"
+        },
+        {
+          "id": "suresh-lakshmi",
+          "title": "Suresh & Lakshmi",
+          "events": ["Traditional", "Wedding"],
+          "featuredImage": "https://images.unsplash.com/photo-1511285560982-1351cdeb9821?w=400&h=500&fit=crop",
+          "slides": [
+            "https://images.unsplash.com/photo-1511285560982-1351cdeb9821?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&h=400&fit=crop"
+          ],
+          "color": "#e6fff5"
         }
       ]
     };
@@ -58,7 +70,7 @@
     <div class="relative w-full lg:w-2/5 image-side flex items-center ${isEven ? 'justify-end lg:justify-end' : 'justify-start lg:justify-start'} px-4 md:px-6" style="background-color: ${album.color}">
         <div class="offset-position ${isEven ? 'lg:right-[-60px] xl:right-[-80px]' : 'lg:left-[-60px] xl:left-[-80px]'} bg-white shadow-lg p-4 featured-image-container rounded z-10">
             <img 
-                src="/Gallery/Home page/${album.featuredImage}" 
+                src="${album.featuredImage}" 
                 alt="${album.title}" 
                 class="w-full h-full object-cover rounded"
                 loading="lazy" 
@@ -85,7 +97,7 @@
                     ${album.slides.map((slide, slideIndex) => `
                         <div class="slide absolute inset-0 w-full h-full ${slideIndex === 0 ? '' : 'opacity-0'}">
                             <img 
-                                src="/Gallery/Home_Gallery/${slide.Home_Gallery}"
+                                src="${slide}"
                                 alt="Slide ${slideIndex + 1}" 
                                 class="w-full h-full object-cover"
                                 loading="lazy"
@@ -112,7 +124,7 @@
 </div>
 `;
 
-    
+        
         
         container.insertAdjacentHTML('beforeend', albumHTML);
       });
@@ -185,4 +197,3 @@
         });
       });
     }
- 

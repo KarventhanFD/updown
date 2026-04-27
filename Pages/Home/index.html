@@ -49,6 +49,31 @@
   .animate-fadeIn {
     animation: fadeIn 0.8s ease-out;
   }
+  
+  /* Image lazy load fade in */
+  img {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+  img.lazy {
+    opacity: 0;
+  }
+  img.loaded {
+    opacity: 1;
+  }
+  
+  /* Skeleton loading animation */
+  @keyframes shimmer {
+    0% { background-position: -468px 0 }
+    100% { background-position: 468px 0 }
+  }
+  .skeleton {
+    background: #1a1a1a;
+    background-image: linear-gradient(to right, #1a1a1a 0%, #2a2a2a 20%, #1a1a1a 40%, #1a1a1a 100%);
+    background-repeat: no-repeat;
+    background-size: 800px 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
 </style>
 
 </head>
@@ -121,54 +146,52 @@
  <section id="hero" class="hero section flex items-center justify-center mt-40 mb-15">
   <div class="carousel-container relative max-w-full w-[90%] md:w-[80%] lg:w-[1000px] h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden rounded-xl shadow-lg">
 
-    <!-- Carousel Items -->
+<!-- Carousel Items -->
     <div class="carousel-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-100">
-      <a href="/Gallery/HD/img-3.jpg" data-lightbox="home-carousel" data-title="Gallery 1">
-        <img src="/Gallery/Home_Gallery/IMG-4.jpg" 
+      <a href="https://images.unsplash.com/photo-1519741497674-611481863552?w=1920" data-lightbox="home-carousel" data-title="Gallery 1">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1200" 
              alt="Gallery 1" 
              class="w-full h-full object-cover rounded-xl"
-             loading="lazy"
-             decoding="async">
+             loading="eager"
+             decoding="async"
+             width="1200"
+             height="600">
       </a>
     </div>
 
     <div class="carousel-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0">
-      <a href="/Gallery/HD/img-6.jpg" data-lightbox="home-carousel" data-title="Gallery 2">
-        <img src="/Gallery/Home_Gallery/img-6.jpg" 
+      <a href="https://images.unsplash.com/photo-1511285560982-1351cdeb9821?w=1920" data-lightbox="home-carousel" data-title="Gallery 2">
+        <img src="https://images.unsplash.com/photo-1511285560982-1351cdeb9821?w=1200" 
              alt="Gallery 2" 
              class="w-full h-full object-cover rounded-xl"
              loading="lazy"
-             decoding="async">
+             decoding="async"
+             width="1200"
+             height="600">
       </a>
     </div>
 
     <div class="carousel-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0">
-      <a href="/Gallery/HD/img-2.jpg" data-lightbox="home-carousel" data-title="Gallery 3">
-        <img src="/Gallery/Home_Gallery/img-1.JPG" 
+      <a href="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1920" data-lightbox="home-carousel" data-title="Gallery 3">
+        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1200" 
              alt="Gallery 3" 
              class="w-full h-full object-cover rounded-xl"
              loading="lazy"
-             decoding="async">
+             decoding="async"
+             width="1200"
+             height="600">
       </a>
     </div>
 
     <div class="carousel-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0">
-      <a href="/Gallery/HD/img-3.jpg" data-lightbox="home-carousel" data-title="Gallery 4">
-        <img src="/Gallery/Home_Gallery/IMG-4.jpg"  
+      <a href="https://images.unsplash.com/photo-1507504034443-144535e5bc54?w=1920" data-lightbox="home-carousel" data-title="Gallery 4">
+        <img src="https://images.unsplash.com/photo-1507504034443-144535e5bc54?w=1200"  
              alt="Gallery 4" 
              class="w-full h-full object-cover rounded-xl"
              loading="lazy"
-             decoding="async">
-      </a>
-    </div>
-
-    <div class="carousel-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0">
-      <a href="/Gallery/HD/img-6.jpg" data-lightbox="home-carousel" data-title="Gallery 5">
-        <img src="/Gallery/Home_Gallery/img-6.jpg"
-             alt="Gallery 5" 
-             class="w-full h-full object-cover rounded-xl"
-             loading="lazy"
-             decoding="async">
+             decoding="async"
+             width="1200"
+             height="600">
       </a>
     </div>
 
@@ -189,57 +212,69 @@
     <h2 class="text-center text-[#FFD645] text-3xl font-bold mb-8">Our Services</h2>
     <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
       <!-- Service 1 -->
-      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
-        <div class="relative group overflow-hidden rounded-lg cursor-pointer ">
-          <img src="/Gallery/Home page/gallery-6.jpg" alt="Model" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+      <div class="border border-white rounded-lg overflow-hidden text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden cursor-pointer">
+          <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400&h=300&fit=crop" alt="Wedding" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy">
         </div>
-        <h3 class="text-xl font-semibold mt-4 text-[#b8860b]">Wedding</h3>
-        <p class="mt-2">Capturing the best fashion moments with high-end model photography.</p>
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-[#b8860b]">Wedding</h3>
+          <p class="mt-2 text-gray-300">Capturing the best wedding moments with beautiful candid shots.</p>
+        </div>
       </div>
   
       <!-- Service 2 -->
-      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
-        <div class="relative group overflow-hidden rounded-lg cursor-pointer">
-          <img src="/Gallery/Home page/gallery-7.jpg" alt="Wedding" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+      <div class="border border-white rounded-lg overflow-hidden text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden cursor-pointer">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop" alt="Outdoor" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy">
         </div>
-        <h3 class="text-xl text-[#b8860b] font-semibold mt-4">Outdoor</h3>
-        <p class="mt-2 text-white">Creating timeless wedding memories with beautiful candid moments.</p>
+        <div class="p-6">
+          <h3 class="text-xl text-[#b8860b] font-semibold">Outdoor</h3>
+          <p class="mt-2 text-gray-300">Creating timeless memories with beautiful outdoor shoots.</p>
+        </div>
       </div>
   
       <!-- Service 3 -->
-      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
-        <div class="relative group overflow-hidden rounded-lg cursor-pointer">
-          <img src="/Gallery/Home page/gallery-6.jpg" alt="Outdoor" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+      <div class="border border-white rounded-lg overflow-hidden text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden cursor-pointer">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=300&fit=crop" alt="Model" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy">
         </div>
-        <h3 class="text-xl text-[#b8860b] font-semibold mt-4">Model</h3>
-        <p class="mt-2 text-white">Explore the beauty of outdoor photography with scenic shots.</p>
+        <div class="p-6">
+          <h3 class="text-xl text-[#b8860b] font-semibold">Model</h3>
+          <p class="mt-2 text-gray-300">Professional model photography with high-end results.</p>
+        </div>
       </div>
   
       <!-- Service 4 -->
-      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
-        <div class="relative group overflow-hidden rounded-lg cursor-pointer">
-          <img src="/Gallery/Home page/gallery-5.jpg" alt="Birthday" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+      <div class="border border-white rounded-lg overflow-hidden text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden cursor-pointer">
+          <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&h=300&fit=crop" alt="Birthday" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy">
         </div>
-        <h3 class="text-xl text-[#b8860b] font-semibold mt-4">Birthday</h3>
-        <p class="mt-2 text-white">Capture joyful birthday moments with vibrant and candid clicks.</p>
+        <div class="p-6">
+          <h3 class="text-xl text-[#b8860b] font-semibold">Birthday</h3>
+          <p class="mt-2 text-gray-300">Capture joyful birthday moments with vibrant clicks.</p>
+        </div>
       </div>
   
       <!-- Service 5 -->
-      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
-        <div class="relative group overflow-hidden rounded-lg cursor-pointer">
-          <img src="/Gallery/Home page/gallery-4.jpg" alt="Travel" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+      <div class="border border-white rounded-lg overflow-hidden text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden cursor-pointer">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop" alt="Travel" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy">
         </div>
-        <h3 class="text-xl text-[#b8860b] font-semibold mt-4">Travel</h3>
-        <p class="mt-2 text-white">Experience breathtaking travel photography from around the world.</p>
+        <div class="p-6">
+          <h3 class="text-xl text-[#b8860b] font-semibold">Travel</h3>
+          <p class="mt-2 text-gray-300">Breathtaking travel photography from around the world.</p>
+        </div>
       </div>
   
       <!-- Service 6 -->
-      <div class="border border-white rounded-lg p-6 text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
-        <div class="relative group overflow-hidden rounded-lg cursor-pointer">
-          <img src="/Gallery/Home page/gallery-3.jpg" alt="Party" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+      <div class="border border-white rounded-lg overflow-hidden text-center shadow-lg transform transition-all duration-300 hover:-translate-y-2">
+        <div class="relative group overflow-hidden cursor-pointer">
+          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=300&fit=crop" alt="Party" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy">
         </div>
-        <h3 class="text-xl text-[#b8860b] font-semibold mt-4">Party</h3>
-        <p class="mt-2 text-white">Fun-filled party photography capturing the best moments.</p>
+        <div class="p-6">
+          <h3 class="text-xl text-[#b8860b] font-semibold">Party</h3>
+          <p class="mt-2 text-gray-300">Fun-filled party photography capturing best moments.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -369,7 +404,7 @@
     <section class="relative w-full mb-2 mx-auto overflow-hidden">
   
     <div class="relative">
-        <img src="/Gallery/Home page/gallery-9.jpg" alt="Rings and Roses" class="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[300px] object-cover">
+        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=1920" alt="Wedding" class="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[300px] object-cover" loading="lazy">
         
 
         <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent"></div>
@@ -389,18 +424,20 @@
       
       <!-- Left: Image Grid -->
       <div class="grid grid-cols-2 gap-4" data-aos="fade-up">
-          <a href="/Gallery/HD/img-2.jpg" data-lightbox="home-gallery" data-title="Photography 1">
-    <img src="/Gallery/Home_Gallery/img-2.JPG" 
+          <a href="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1920" data-lightbox="home-gallery" data-title="Photography 1">
+    <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600" 
          alt="Photography 1" 
          loading="lazy"
+         decoding="async"
          class="w-full h-[500px] object-cover rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
   </a>
 
   <!-- Gallery Item 2 -->
-  <a href="/Gallery/HD/img-6.jpg" data-lightbox="home-gallery" data-title="Photography 2">
-    <img src="/Gallery/Home_Gallery/img-6.jpg" 
+  <a href="https://images.unsplash.com/photo-1519741497674-611481863552?w=1920" data-lightbox="home-gallery" data-title="Photography 2">
+    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600" 
          alt="Photography 2" 
          loading="lazy"
+         decoding="async"
          class="w-full h-[500px] object-cover rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
   </a>
       </div>
@@ -445,10 +482,10 @@
       <div class="relative w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden" data-aos="fade-down">
           <div class="carousel relative w-full h-full">
               <div class="carousel-inner flex w-full h-full">
-                  <img src="/Gallery/Home page/gallery-10.jpg" class="carousel-items w-full h-full object-cover">
-                  <img src="/Gallery/Home page/gallery-11.jpg" class="carousel-items w-full h-full object-cover">
-                  <img src="/Gallery/Home page/gallery-12.jpg" class="carousel-items w-full h-full object-cover">
-                  <img src="/Gallery/Home page/gallery-13.jpg" class="carousel-items w-full h-full object-cover">
+                  <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800" class="carousel-items w-full h-full object-cover" loading="lazy">
+                  <img src="https://images.unsplash.com/photo-1511285560982-1351cdeb9821?w=800" class="carousel-items w-full h-full object-cover" loading="lazy">
+                  <img src="https://images.unsplash.com/photo-1507504034443-144535e5bc54?w=800" class="carousel-items w-full h-full object-cover" loading="lazy">
+                  <img src="https://images.unsplash.com/photo-1520854221256-17451cc330e7?w=800" class="carousel-items w-full h-full object-cover" loading="lazy">
               </div>
           </div>
           
@@ -532,6 +569,38 @@
 
   <script src="/JS/script.js"> </script>
   <script src="/JS/common.js"></script>
+  
+  <script>
+    // Lazy load images with Intersection Observer
+    document.addEventListener("DOMContentLoaded", function() {
+      const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+      
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              if (img.dataset.src) {
+                img.src = img.dataset.src;
+              }
+              img.classList.add('loaded');
+              imageObserver.unobserve(img);
+            }
+          });
+        });
+        
+        lazyImages.forEach(img => {
+          img.classList.add('lazy');
+          imageObserver.observe(img);
+        });
+      } else {
+        // Fallback for older browsers
+        lazyImages.forEach(img => {
+          img.classList.add('loaded');
+        });
+      }
+    });
+  </script>
   <!-- Lightbox2 JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 
