@@ -1,3 +1,115 @@
 body {
   font-family: 'Montserrat', sans-serif;
 }
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #06b6d4 #111;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #111;
+}
+::-webkit-scrollbar-thumb {
+  background: #06b6d4;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #22d3ee;
+}
+
+::selection {
+  background: #06b6d4;
+  color: #000;
+}
+
+.glass {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #06b6d4, #22d3ee, #06b6d4);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerText 3s linear infinite;
+}
+
+@keyframes shimmerText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.glow {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.15), 0 0 60px rgba(6, 182, 212, 0.05);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+}
+
+.btn-cyan {
+  background: transparent;
+  border: 1px solid #06b6d4;
+  color: #06b6d4;
+  transition: all 0.3s ease;
+}
+.btn-cyan:hover {
+  background: #06b6d4;
+  color: #000;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+}
+
+.btn-cyan-solid {
+  background: #06b6d4;
+  color: #000;
+  transition: all 0.3s ease;
+}
+.btn-cyan-solid:hover {
+  background: #22d3ee;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+  transform: translateY(-2px);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+@keyframes ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+.card-hover {
+  transition: all 0.4s ease;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(6, 182, 212, 0.12);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(6, 182, 212, 0.15);
+  border-top-color: #06b6d4;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  ring: 2px solid #06b6d4;
+}

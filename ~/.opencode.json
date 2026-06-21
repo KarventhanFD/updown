@@ -1,0 +1,8 @@
+{
+  "model": "google/gemini-2.5-pro",
+  "provider": {
+    "google": {
+      "apiKey": "AIzaSyD9bSNGgJa0pib0D0CBdEWytZ3gMekgKTw"
+    }
+  }
+}

@@ -334,7 +334,7 @@
 
     <!-- Album Details Page Content -->
     <div id="album-details-page" class="hidden container mx-auto px-4 mt-32 text-white">
-      <button id="back-to-gallery" class="mb-8 px-6 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors flex items-center">
+      <button id="back-to-gallery" class="mb-8 px-6 py-2 bg-cyan-400/10 hover:bg-cyan-400/20 text-cyan-400 rounded-lg transition-all duration-300 flex items-center border border-cyan-400/20">
         <i class="fas fa-arrow-left mr-2"></i> Back to Gallery
       </button>
       
@@ -387,8 +387,8 @@
         </p>
         <div class="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
           <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-cyan-400 focus:outline-none">
-          <button class="bg-cyan-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-cyan-300 transition-colors">
-            Subscribe
+          <button class="bg-cyan-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-cyan-300 transition-all duration-300 shadow-lg shadow-cyan-400/20">
+            Subscribe <i class="fas fa-paper-plane ml-2"></i>
           </button>
         </div>
       </div>
@@ -635,9 +635,9 @@
            class="w-full album-image h-64 object-cover rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
     </a>
     <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-      <button class="view-album text-white text-lg font-semibold bg-cyan-500 hover:bg-cyan-600 px-6 py-2 rounded-full transition-colors duration-300" data-album-id="${album.id}">View Album</button>
+      <button class="view-album text-black text-lg font-semibold bg-cyan-400 hover:bg-cyan-300 px-6 py-2 rounded-full transition-all duration-300" data-album-id="${album.id}">View Album</button>
     </div>
-    <span class="absolute top-4 left-4 bg-cyan-500 text-black text-xs font-bold px-3 py-1 rounded-full">${album.category}</span>
+    <span class="absolute top-4 left-4 bg-cyan-400/20 text-cyan-400 text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-sm border border-cyan-400/30">${album.category}</span>
   </div>
   <div class="p-6">
     <h3 class="text-xl font-semibold text-white mb-2">${album.title}</h3>
@@ -667,9 +667,9 @@
                class="w-full album-image h-64 object-cover rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
         </a>
         <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-          <button class="view-album text-white text-lg font-semibold bg-cyan-500 hover:bg-cyan-600 px-6 py-2 rounded-full transition-colors duration-300" data-album-id="${album.id}">View Album</button>
+          <button class="view-album text-black text-lg font-semibold bg-cyan-400 hover:bg-cyan-300 px-6 py-2 rounded-full transition-all duration-300" data-album-id="${album.id}">View Album</button>
         </div>
-        <span class="absolute top-4 left-4 bg-cyan-500 text-black text-xs font-bold px-3 py-1 rounded-full">${album.category}</span>
+        <span class="absolute top-4 left-4 bg-cyan-400/20 text-cyan-400 text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-sm border border-cyan-400/30">${album.category}</span>
       </div>
       <div class="p-6">
         <h3 class="text-xl font-semibold text-white mb-2">${album.title}</h3>

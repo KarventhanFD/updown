@@ -52,31 +52,16 @@ function nextSlide() {
   showSlide(currentIndex);
 }
 
-// Auto-play every 3s
-setInterval(nextSlide, 3000);
+// Auto-play every 3s (only if not overridden by page-specific script)
+if (!document.getElementById('hero-slogan')) {
+  setInterval(nextSlide, 3000);
+}
 
 // Initialize first slide
 showSlide(currentIndex);
 
 
 
-
-// ---------------------------- Latest Collection Carousel ---------------------------- //
-const latestCarousel = document.querySelector(".carousel-inner");
-const latestImages = document.querySelectorAll(".carousel-items");
-let latestIndex = 0;
-
-function showLatestSlide(newIndex) {
-  if (!latestCarousel || latestImages.length === 0) return;
-  latestIndex = (newIndex + latestImages.length) % latestImages.length;
-  const offset = -latestIndex * 100;
-  latestCarousel.style.transform = `translateX(${offset}%)`;
-  latestCarousel.style.transition = "transform 0.5s ease-in-out";
-}
-
-document.getElementById("prev")?.addEventListener("click", () => showLatestSlide(latestIndex - 1));
-document.getElementById("next")?.addEventListener("click", () => showLatestSlide(latestIndex + 1));
-setInterval(() => showLatestSlide(latestIndex + 1), 3000); // Auto-slide
 
 // ---------------------------- Counter Section ---------------------------- //
 function initCountUp() {
